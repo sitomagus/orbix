@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orbix - Página Inicial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/7.css">
+    <style>
+        :root {
+            --vista-blue: #0078d7;
+            --vista-green: #33b047;
+            --aero-glow: rgba(255, 255, 255, 0.4);
+        }
+
+        body {
+            background: radial-gradient(circle at 50% 120%, #1a5c8a 0%, #0c2b45 50%, #051422 100%);
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .aurora-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 15% 25%, rgba(0, 240, 255, 0.22) 0%, transparent 45%),
+                radial-gradient(circle at 85% 15%, rgba(135, 230, 255, 0.18) 0%, transparent 45%),
+                radial-gradient(circle at 50% 85%, rgba(30, 144, 255, 0.28) 0%, transparent 55%);
+            filter: blur(60px);
+            opacity: 0.9;
+        }
+
+        .frutiger-gel-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 48px;
+            font-size: 22px;
+            font-weight: 500;
+            color: #ffffff;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+            border-radius: 9999px;
+            box-sizing: border-box;
+            width: 100%; /* Deixado 100% para responsividade */
+            max-width: 256px; /* Limite máximo para não ficar gigante em telas grandes */
+            
+            background: linear-gradient(to bottom, #4db0f7 0%, #1b92e3 40%, #006eb3 50%, #005594 100%);
+            border: 2px solid #004675;
+            box-shadow: 
+                inset 0 1px 0 rgba(255, 255, 255, 0.5), 
+                inset 0 -2px 5px rgba(0, 0, 0, 0.2), 
+                0 4px 12px rgba(0, 0, 0, 0.35), 
+                0 0 1px rgba(255, 255, 255, 0.2);
+                
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+            user-select: none;
+        }
+
+        .frutiger-gel-btn::before {
+            content: '';
+            position: absolute;
+            top: 2px; left: 4px; right: 4px; height: 48%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.15) 85%, rgba(255, 255, 255, 0) 100%);
+            border-radius: 9999px 9999px 7000px 7000px / 9999px 9999px 1200px 1200px;
+            pointer-events: none;
+        }
+
+        .frutiger-gel-btn::after {
+            content: '';
+            position: absolute;
+            top: 4px; left: 20%; width: 14px; height: 10px;
+            background: radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 80%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .frutiger-gel-btn:hover {
+            transform: scale(1.03);
+            background: linear-gradient(to bottom, #69c0ff 0%, #2ba5f5 40%, #0084d6 50%, #006eb3 100%);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 6px 16px rgba(0, 224, 255, 0.4), 0 0 2px rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+        }
+
+        .frutiger-gel-btn:active {
+            transform: scale(0.97);
+            background: linear-gradient(to bottom, #005594 0%, #006eb3 50%, #1b92e3 100%);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .frutiger-gel-btn-green {
+            background: linear-gradient(to bottom, #85e24b 0%, #50c125 40%, #2f9610 50%, #23750a 100%);
+            border: 2px solid #144904;
+        }
+
+        .frutiger-gel-btn-green:hover {
+            background: linear-gradient(to bottom, #9bf262 0%, #64d835 40%, #3cae1b 50%, #2f9610 100%);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 6px 16px rgba(85, 226, 75, 0.4), 0 0 2px rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+        }
+
+        .aero-glass-window {
+            background: rgba(175, 215, 245, 0.35) !important;
+            backdrop-filter: blur(12px) saturate(120%);
+            -webkit-backdrop-filter: blur(12px) saturate(120%);
+            border: 1px solid rgba(255, 255, 255, 0.5) !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.8) !important;
+            padding: 6px !important;
+            border-radius: 8px !important;
+        }
+        
+        .aero-glass-window .title-bar {
+            background: transparent !important;
+            border: none !important;
+        }
+
+        .window-body {
+            background: rgba(245, 250, 255, 0.9) !important;
+            border: 1px solid rgba(10, 30, 60, 0.3) !important;
+            border-radius: 3px;
+            margin: 4px 0 0 0 !important;
+            padding: 16px !important;
+            color: #000000 !important; 
+        }
+
+        .window-body label {
+            color: #000000 !important;
+            text-shadow: none !important;
+        }
+
+        .window-body input[type="text"],
+        .window-body input[type="password"],
+        .window-body input[type="email"] {
+            width: 100%;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #000000 !important; 
+            background-color: #ffffff !important;
+        }
+
+        .window-body input::placeholder {
+            color: #777777 !important;
+        }
+
+        .window-body button {
+            color: #000000 !important;
+            text-shadow: none !important;
+        }
+
+        .win7-login-avatar {
+            position: relative;
+            width: 100px; /* Ajuste leve para telas pequenas */
+            height: 100px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
+            border-radius: 12px;
+            padding: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.5); 
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 8px 16px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px auto;
+        }
+
+        @media (min-width: 640px) {
+            .win7-login-avatar {
+                width: 130px;
+                height: 130px;
+            }
+        }
+
+        .win7-avatar-inner {
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+            border: 1px solid rgba(0,0,0,0.15);
+        }
+
+        .win7-login-avatar::after {
+            content: '';
+            position: absolute;
+            top: 4px; left: 4px; right: 4px; bottom: 4px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.05) 45%, rgba(255, 255, 255, 0) 46%, rgba(255, 255, 255, 0) 100%);
+            border-radius: 8px;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .btn-eye-toggle {
+            all: unset !important;
+            position: absolute !important;
+            right: 6px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            cursor: pointer !important;
+            opacity: 0.5 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            transition: opacity 0.15s !important;
+            padding: 2px !important;
+            color: transparent !important;
+        }
+        .btn-eye-toggle:hover { opacity: 1 !important; }
+
+        .bubble {
+            position: absolute;
+            bottom: -50px;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.03) 70%, rgba(0, 180, 255, 0.2) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3);
+            pointer-events: none;
+            animation: floatUp 8s infinite ease-in-out;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-80vh) translateX(50px) scale(0.8); opacity: 0; }
+        }
+
+        @keyframes axolotlSwim {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-1px, 1.5px) rotate(-1.5deg); }
+            50% { transform: translate(1px, -1px) rotate(1.5deg); }
+            75% { transform: translate(-1px, 0.5px) rotate(-0.5deg); }
+        }
+
+        .animated-axolotl {
+            animation: axolotlSwim 6s ease-in-out infinite;
+            transform-origin: 55px 58px !important;
+            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes axolotlSpin360 {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .spinning {
+            animation: axolotlSpin360 1s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+        }
+
+        .content-fade-in { animation: contentEnter 0.5s cubic-bezier(0.1, 0.9, 0.2, 1) forwards; }
+        .content-fade-out { animation: contentExit 0.3s ease-in forwards; }
+        @keyframes contentEnter { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes contentExit { from { transform: scale(1); opacity: 1; } to { transform: scale(0.95); opacity: 0; } }
+
+        @keyframes slideUpFade {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .alert-fluid {
+            animation: slideUpFade 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .aero-modal-backdrop { background: rgba(4, 25, 48, 0.55); backdrop-filter: blur(8px) saturate(120%); -webkit-backdrop-filter: blur(8px) saturate(120%); z-index: 9999; }
+        
+        .modal-glass-wrapper {
+            background: radial-gradient(circle at top right, rgba(225, 245, 255, 0.85) 0%, rgba(185, 215, 245, 0.95) 100%);
+            backdrop-filter: blur(12px) saturate(140%); border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,1); width: 100%; max-width: 340px;
+            display: flex; flex-direction: column; animation: contentEnter 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);
+        }
+        
+        .modal-glass-header {
+            background: linear-gradient(to bottom, rgba(111, 174, 240, 0.95) 0%, rgba(70, 139, 224, 0.9) 48%, rgba(34, 103, 199, 0.9) 50%, rgba(21, 85, 171, 0.95) 100%);
+            color: white; font-weight: bold; font-size: 13px; padding: 8px 14px; border-bottom: 1px solid rgba(16, 65, 140, 0.6); text-shadow: 0 1px 2px rgba(0,0,0,0.6); box-shadow: inset 0 1px 0 rgba(255,255,255,0.4); display: flex; justify-content: space-between; align-items: center; border-radius: 8px 8px 0 0;
+        }
+        
+        .btn-close-gel {
+            appearance: none; -webkit-appearance: none; width: 34px !important; height: 20px !important; border-radius: 4px !important; background: linear-gradient(to bottom, #fa8c8c 0%, #e03434 45%, #bd1515 50%, #8f0707 100%) !important; border: 1px solid #540202 !important; color: #ffffff !important; display: flex !important; align-items: center !important; justify-content: center !important; cursor: pointer !important; box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.7), 0 2px 4px rgba(0,0,0,0.3) !important; transition: all 0.15s; position: relative; overflow: hidden; padding: 0 !important; min-width: unset !important; outline: none !important;
+        }
+        .btn-close-gel svg { width: 10px; height: 10px; stroke-width: 2.5px; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.6)); }
+        .btn-close-gel:hover { filter: brightness(1.15); transform: scale(1.05); }
+        .btn-close-gel:active, .btn-close-gel:focus { transform: scale(0.95); outline: none !important; background: linear-gradient(to bottom, #fa8c8c 0%, #e03434 45%, #bd1515 50%, #8f0707 100%) !important; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3) !important; }
+
+        .btn-gel-gray {
+            appearance: none; -webkit-appearance: none; background: linear-gradient(to bottom, #f2f6f9 0%, #d4e0e8 48%, #b9cdd9 50%, #a4bfd1 100%) !important; border: 1px solid #718c9e !important; color: #0b3f80 !important; text-shadow: 0 1px 1px rgba(255,255,255,0.8) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 2px 4px rgba(0,0,0,0.15) !important; padding: 6px 18px !important; border-radius: 20px !important; font-weight: bold !important; font-size: 12px !important; cursor: pointer !important; transition: all 0.15s; display: inline-flex !important; align-items: center !important; justify-content: center !important; min-width: unset !important; margin: 0 !important; height: auto !important; outline: none !important;
+        }
+        .btn-gel-gray:hover { filter: brightness(1.05); transform: scale(1.03); }
+        .btn-gel-gray:active, .btn-gel-gray:focus { 
+            transform: scale(0.97); 
+            background: linear-gradient(to bottom, #f2f6f9 0%, #d4e0e8 48%, #b9cdd9 50%, #a4bfd1 100%) !important;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2) !important; 
+            outline: none !important;
+        }
+
+        .btn-gel-green {
+            appearance: none; -webkit-appearance: none; background: linear-gradient(to bottom, #7fdf5f 0%, #46b823 48%, #289009 50%, #1a6e03 100%) !important; border: 1px solid #104201 !important; color: white !important; text-shadow: 0 1px 1px rgba(0,0,0,0.5) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 4px rgba(0,0,0,0.2) !important; padding: 6px 18px !important; border-radius: 20px !important; font-weight: bold !important; font-size: 12px !important; cursor: pointer !important; transition: all 0.15s; display: inline-flex !important; align-items: center !important; justify-content: center !important; min-width: unset !important; margin: 0 !important; height: auto !important; outline: none !important;
+        }
+        .btn-gel-green:hover { filter: brightness(1.15); transform: scale(1.03); box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 3px 8px rgba(70, 184, 35, 0.4) !important; }
+        .btn-gel-green:active, .btn-gel-green:focus { 
+            transform: scale(0.97); 
+            background: linear-gradient(to bottom, #7fdf5f 0%, #46b823 48%, #289009 50%, #1a6e03 100%) !important;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.4) !important; 
+            outline: none !important;
+        }
+
+        .btn-gel-gray::after, .btn-gel-gray::before, .btn-gel-green::after, .btn-gel-green::before { display: none !important; }
+        .btn-gel-gray::-moz-focus-inner, .btn-gel-green::-moz-focus-inner, .btn-close-gel::-moz-focus-inner { border: 0 !important; outline: none !important; }
+
+        .aero-input { width: 100%; background: #ffffff; border: 1px solid #abadb3; border-radius: 2px; padding: 6px 8px; font-size: 12px; color: #000; outline: none; box-shadow: inset 1px 1px 2px rgba(0,0,0,0.05); transition: border 0.2s, box-shadow 0.2s; }
+        .aero-input:focus { border-color: #3d7bad; box-shadow: inset 1px 1px 2px rgba(0,0,0,0.05), 0 0 3px rgba(61,123,173,0.5); }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen text-white relative">
+
+    <div class="aurora-bg"></div>
+    <div id="bubbles-container" class="fixed inset-0 pointer-events-none z-0"></div>
+
+    <main class="w-full max-w-lg mx-auto flex flex-col items-center justify-center z-10 flex-1 relative h-[550px]">
+        
+        <!-- Adicionei px-4 na div abaixo para telas pequenas -->
+        <div id="welcome-screen" class="absolute w-full flex flex-col items-center content-fade-in gap-6 px-4">
+            <div class="logo-container cursor-pointer select-none mb-2 sm:mb-4 transform hover:scale-105 transition-transform duration-300" onclick="triggerJumpAnimation('mascot-welcome-g', 'water-orb-welcome')">
+                <!-- Adicionado max-w e height auto para SVG não quebrar layout -->
+                <svg class="w-full max-w-[260px] sm:max-w-[310px] h-auto" viewBox="0 0 310 120" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="waterBubbleGrad" cx="35%" cy="30%" r="65%">
+                            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+                            <stop offset="40%" stop-color="#73d0fc" stop-opacity="0.6" />
+                            <stop offset="80%" stop-color="#006eb3" stop-opacity="0.25" />
+                            <stop offset="100%" stop-color="#003566" stop-opacity="0.8" />
+                        </radialGradient>
+                        <linearGradient id="bubbleReflex" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.75"/>
+                            <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+                        </linearGradient>
+                        <radialGradient id="axolotlBodyGrad" cx="35%" cy="35%" r="65%">
+                            <stop offset="0%" stop-color="#e0f7fa" />
+                            <stop offset="55%" stop-color="#80deea" />
+                            <stop offset="100%" stop-color="#26c6da" />
+                        </radialGradient>
+                        <linearGradient id="axolotlFinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+                            <stop offset="20%" stop-color="#ff3385" stop-opacity="0.75"/>
+                            <stop offset="70%" stop-color="#e6005c" stop-opacity="0.35"/>
+                            <stop offset="100%" stop-color="#99003d" stop-opacity="0.15"/>
+                        </linearGradient>
+                        <radialGradient id="axolotlFaceGrad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+                            <stop offset="100%" stop-color="#e0f7fa" stop-opacity="0.1" />
+                        </radialGradient>
+                        <linearGradient id="aeroGlassTextGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+                            <stop offset="25%" stop-color="#ffffff" stop-opacity="0.5"/>
+                            <stop offset="48%" stop-color="#ffffff" stop-opacity="0.2"/>
+                            <stop offset="50%" stop-color="#ffffff" stop-opacity="0.05"/>
+                            <stop offset="85%" stop-color="#e0f7fa" stop-opacity="0.3"/>
+                            <stop offset="100%" stop-color="#80deea" stop-opacity="0.55"/>
+                        </linearGradient>
+                        <linearGradient id="glassContourGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.85"/>
+                            <stop offset="50%" stop-color="#ffffff" stop-opacity="0.2"/>
+                            <stop offset="100%" stop-color="#ffffff" stroke-width="1.2" stop-opacity="0.6"/>
+                        </linearGradient>
+                        <filter id="aeroWhiteGlow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="1" dy="2.5" stdDeviation="1.5" flood-color="#001529" flood-opacity="0.4"/>
+                            <feGaussianBlur stdDeviation="4.5" result="blurGlow"/>
+                            <feColorMatrix type="matrix" values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 2.2 0" in="blurGlow" result="softGlow"/>
+                            <feMerge><feMergeNode in="softGlow"/><feMergeNode in="SourceGraphic"/></feMerge>
+                        </filter>
+                    </defs>
+                    <g transform="translate(10, 5)">
+                        <circle cx="55" cy="55" r="45" fill="#000000" opacity="0.2" filter="blur(3px)" transform="translate(2, 4)" />
+                        <circle id="water-orb-welcome" class="water-orb" cx="55" cy="55" r="45" fill="url(#waterBubbleGrad)" stroke="#81d4fa" stroke-width="1.5" stroke-opacity="0.8" />
+                        <g class="animated-axolotl" id="mascot-welcome-g">
+                            <path d="M 33,48 C 22,44 14,48 20,54 C 24,58 31,54 33,52 Z" fill="url(#axolotlFinGrad)" />
+                            <path d="M 32,56 C 20,54 12,60 18,66 C 22,70 28,64 32,60 Z" fill="url(#axolotlFinGrad)" />
+                            <path d="M 77,48 C 88,44 96,48 90,54 C 86,58 79,54 77,52 Z" fill="url(#axolotlFinGrad)" />
+                            <path d="M 78,56 C 90,54 98,60 92,66 C 88,70 82,64 78,60 Z" fill="url(#axolotlFinGrad)" />
+                            <path d="M 55,78 C 48,88 42,92 55,95 C 68,92 62,88 55,78 Z" fill="url(#axolotlFinGrad)" />
+                            <circle cx="44" cy="76" r="3.5" fill="url(#axolotlBodyGrad)" />
+                            <circle cx="66" cy="76" r="3.5" fill="url(#axolotlBodyGrad)" />
+                            <circle cx="55" cy="58" r="23" fill="url(#axolotlBodyGrad)" />
+                            <ellipse cx="55" cy="59" rx="19" ry="17" fill="url(#axolotlFaceGrad)" />
+                            <circle cx="46.5" cy="57" r="3.5" fill="#1c2d3d" />
+                            <circle cx="45.5" cy="55.5" r="1.3" fill="#ffffff" />
+                            <circle cx="63.5" cy="57" r="3.5" fill="#1c2d3d" />
+                            <circle cx="62.5" cy="55.5" r="1.3" fill="#ffffff" />
+                            <ellipse cx="42" cy="61.5" rx="2.5" ry="1.2" fill="#ff8a80" opacity="0.65" />
+                            <ellipse cx="68" cy="61.5" rx="2.5" ry="1.2" fill="#ff8a80" opacity="0.65" />
+                            <path d="M 52,60.5 Q 53.5,62 55,60.5 Q 56.5,62 58,60.5" fill="none" stroke="#1c2d3d" stroke-width="1.2" stroke-linecap="round" />
+                        </g>
+                        <path d="M 20,40 C 30,22 80,22 90,40 C 75,32 35,32 20,40 Z" fill="url(#bubbleReflex)" />
+                    </g>
+                    <g filter="url(#aeroWhiteGlow)">
+                        <text x="112" y="88" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Trebuchet MS', sans-serif" font-weight="700" font-size="78" fill="url(#aeroGlassTextGrad)" stroke="url(#glassContourGrad)" stroke-width="1.2" letter-spacing="-1">rbix</text>
+                    </g>
+                </svg>
+            </div>
+
+            <!-- Ajuste Principal: As classes text-xs sm:text-sm md:text-base controlam o tamanho responsivo -->
+            <p class="text-sky-100 text-center text-xs sm:text-sm md:text-base max-w-[280px] sm:max-w-sm leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] font-medium">
+                O brilho das antigas conexões em uma nova órbita.
+            </p>
+            
+            <div class="flex flex-col gap-4 sm:gap-5 w-full items-center px-4">
+                <div onclick="goToVistaLogin('login')" class="frutiger-gel-btn">Entrar</div>
+                <div onclick="goToVistaLogin('register')" class="frutiger-gel-btn frutiger-gel-btn-green">Criar Conta</div>
+            </div>
+        </div>
+
+        <div id="vista-screen" class="hidden absolute w-full max-w-xs content-fade-in px-4">
+            
+            <div class="window active aero-glass-window" style="max-width: 100%;">
+                
+                <div class="title-bar">
+                    <div class="title-bar-text" id="win7-window-title">Fazer Login - Orbix</div>
+                    <div class="title-bar-controls">
+                        <button aria-label="Minimize" onclick="cancelToWelcome()"></button>
+                        <button aria-label="Maximize" disabled></button>
+                        <button aria-label="Close" onclick="cancelToWelcome()"></button>
+                    </div>
+                </div>
+
+                <div class="window-body">
+                    
+                    <form onsubmit="handleAuthSubmit(event)">
+                        
+                        <div id="avatar-container" class="win7-login-avatar cursor-pointer" onclick="triggerJumpAnimation('mascot-login-g', null)">
+                            <div class="win7-avatar-inner">
+                                <svg width="100%" height="100%" viewBox="0 0 110 110">
+                                    <g transform="translate(0, 5)" class="animated-axolotl" id="mascot-login-g">
+                                        <path d="M 33,48 C 22,44 14,48 20,54 C 24,58 31,54 33,52 Z" fill="url(#axolotlFinGrad)" />
+                                        <path d="M 32,56 C 20,54 12,60 18,66 C 22,70 28,64 32,60 Z" fill="url(#axolotlFinGrad)" />
+                                        <path d="M 77,48 C 88,44 96,48 90,54 C 86,58 79,54 77,52 Z" fill="url(#axolotlFinGrad)" />
+                                        <path d="M 78,56 C 90,54 98,60 92,66 C 88,70 82,64 78,60 Z" fill="url(#axolotlFinGrad)" />
+                                        <path d="M 55,78 C 48,88 42,92 55,95 C 68,92 62,88 55,78 Z" fill="url(#axolotlFinGrad)" />
+                                        <circle cx="44" cy="76" r="3.5" fill="url(#axolotlBodyGrad)" />
+                                        <circle cx="66" cy="76" r="3.5" fill="url(#axolotlBodyGrad)" />
+                                        <circle cx="55" cy="58" r="23" fill="url(#axolotlBodyGrad)" />
+                                        <ellipse cx="55" cy="59" rx="19" ry="17" fill="url(#axolotlFaceGrad)" />
+                                        <circle cx="46.5" cy="57" r="3.5" fill="#1c2d3d" />
+                                        <circle cx="45.5" cy="55.5" r="1.3" fill="#ffffff" />
+                                        <circle cx="63.5" cy="57" r="3.5" fill="#1c2d3d" />
+                                        <circle cx="62.5" cy="55.5" r="1.3" fill="#ffffff" />
+                                        <ellipse cx="42" cy="61.5" rx="2.5" ry="1.2" fill="#ff8a80" opacity="0.65" />
+                                        <ellipse cx="68" cy="61.5" rx="2.5" ry="1.2" fill="#ff8a80" opacity="0.65" />
+                                        <path d="M 52,60.5 Q 53.5,62 55,60.5 Q 56.5,62 58,60.5" fill="none" stroke="#1c2d3d" stroke-width="1.2" stroke-linecap="round" />
+                                    </g>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="field-row-stacked hidden mb-3" id="field-fullname-container">
+                            <label for="vista-fullname">Nome completo:</label>
+                            <input type="text" id="vista-fullname" placeholder="Ex: Lucas Silva">
+                        </div>
+
+                        <div class="field-row-stacked hidden mb-3" id="field-email-container">
+                            <label for="vista-email">Seu e-mail:</label>
+                            <input type="email" id="vista-email" placeholder="Precisamos validar este e-mail" onblur="checkEmailAvailability()">
+                            <span id="email-feedback" class="text-[11px] mt-1 font-semibold hidden block"></span>
+                        </div>
+
+                        <div class="field-row-stacked mb-3">
+                            <label for="vista-user" id="label-user">Nome de usuário:</label>
+                            <input type="text" id="vista-user" required placeholder="Ex: Orbix_Aero" onblur="checkUsernameAvailability()">
+                            <span id="user-feedback" class="text-[11px] mt-1 font-semibold hidden block"></span>
+                        </div>
+
+                        <div class="field-row-stacked">
+                            <label for="vista-pass">Senha:</label>
+                            <div style="position:relative; width: 100%;">
+                                <input type="password" id="vista-pass" required placeholder="Senha" style="width: 100%; padding-right: 26px;">
+                                <button type="button" class="btn-eye-toggle" onclick="togglePasswordVisibility()" title="Mostrar/Ocultar">
+                                    <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#4a5568" viewBox="0 0 24 24">
+                                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <div class="w-full flex justify-end mt-1" id="forgot-password-container">
+                                <a href="#" onclick="openForgotPasswordModal()" class="text-[10px] text-[#0b3f80] hover:text-[#0070c7] hover:underline font-semibold transition-colors">
+                                    Esqueceu sua senha?
+                                </a>
+                            </div>
+                        </div>
+
+                        <div style="display:flex; justify-content:space-between; margin-top:16px; padding-top:10px; border-top:1px solid #dfdfdf;">
+                            <button type="button" onclick="cancelToWelcome()">Cancelar</button>
+                            <button type="submit" id="btn-submit-action" class="default">Entrar</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="retro-alert" class="hidden absolute bottom-6 w-11/12 max-w-sm mx-auto p-3 rounded-lg border flex items-center justify-center text-sm z-50 shadow-xl alert-fluid">
+            <span id="alert-text" class="font-medium text-center tracking-wide">...</span>
+        </div>
+    </main>
+
+    <div id="modal-forgot-password" class="hidden fixed inset-0 flex items-center justify-center aero-modal-backdrop" style="z-index: 10005;">
+        <div class="modal-glass-wrapper">
+            <div class="modal-glass-header">
+                <span>Recuperar Senha</span>
+                <button onclick="closeForgotPasswordModal()" class="btn-close-gel" title="Fechar">
+                    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor"><path d="M2 2l10 10M12 2L2 12"/></svg>
+                </button>
+            </div>
+            <div class="p-4 flex flex-col gap-3 bg-[rgba(255,255,255,0.7)] border border-white rounded-b-lg">
+                <p class="text-[12px] text-[#0b3f80] font-medium leading-tight">
+                    Digite o e-mail da sua conta. Vamos te enviar um link para redefinir sua senha.
+                </p>
+                <div class="flex flex-col gap-1">
+                    <label class="text-[11px] font-bold text-[#0b3f80] drop-shadow-sm">Seu e-mail:</label>
+                    <input type="email" id="forgot-email-input" class="aero-input py-1.5" placeholder="seu@email.com">
+                </div>
+                <div class="flex gap-2 justify-end mt-2 pt-3 border-t border-[rgba(255,255,255,0.8)]">
+                    <button onclick="closeForgotPasswordModal()" class="btn-gel-gray">Cancelar</button>
+                    <button onclick="sendPasswordReset()" class="btn-gel-green">Enviar Link</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="fixed bottom-4 w-full text-center text-[11px] text-sky-200/50 z-10">
+        Projeto de Desenvolvimento II (ADS6N26-1)
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCxbe1B4hgVBLstArxd3rYlunA4yvE1Guc",
+            authDomain: "orbix-netz.firebaseapp.com",
+            projectId: "orbix-netz",
+            storageBucket: "orbix-netz.firebasestorage.app",
+            messagingSenderId: "204340422679",
+            appId: "1:204340422679:web:3bbea47607f04ef68a5452",
+            measurementId: "G-HK8SWQ7S7Y"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentMode = 'login';
+
+        window.generateBubbles = function() {
+            const container = document.getElementById('bubbles-container');
+            for (let i = 0; i < 20; i++) { window.createBubble(container); }
+        }
+
+        window.createBubble = function(container) {
+            const bubble = document.createElement('div');
+            bubble.classList.add('bubble');
+            const size = Math.random() * 32 + 8;
+            bubble.style.width = `${size}px`;
+            bubble.style.height = `${size}px`;
+            bubble.style.left = `${Math.random() * 100}%`;
+            bubble.style.animationDelay = `${Math.random() * 6}s`;
+            bubble.style.animationDuration = `${Math.random() * 8 + 6}s`;
+            container.appendChild(bubble);
+            bubble.addEventListener('animationend', () => { bubble.remove(); window.createBubble(container); });
+        }
+
+        window.goToVistaLogin = function(mode) {
+            currentMode = mode;
+            const welcomeScreen = document.getElementById('welcome-screen');
+            const vistaScreen = document.getElementById('vista-screen');
+            const inputUser = document.getElementById('vista-user');
+            const inputPass = document.getElementById('vista-pass');
+            
+            const fieldFullname = document.getElementById('field-fullname-container');
+            const fieldEmail = document.getElementById('field-email-container');
+            const avatarContainer = document.getElementById('avatar-container');
+            const forgotPassContainer = document.getElementById('forgot-password-container');
+            
+            const windowTitle = document.getElementById('win7-window-title');
+            const labelUser = document.getElementById('label-user');
+            const btnSubmit = document.getElementById('btn-submit-action');
+
+            document.getElementById('user-feedback').classList.add('hidden');
+            document.getElementById('email-feedback').classList.add('hidden');
+
+            inputPass.type = "password";
+            document.getElementById('eye-icon').innerHTML = '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';
+
+            if (mode === 'login') {
+                windowTitle.innerText = "Fazer Login - Orbix";
+                labelUser.innerText = "Nome de usuário:";
+                inputUser.placeholder = "Ex: Orbix_Aero";
+                inputPass.placeholder = "Senha";
+                btnSubmit.innerText = "Entrar";
+                
+                avatarContainer.classList.remove('hidden');
+                fieldFullname.classList.add('hidden');
+                fieldEmail.classList.add('hidden');
+                forgotPassContainer.classList.remove('hidden');
+                
+                document.getElementById('vista-fullname').required = false;
+                document.getElementById('vista-email').required = false;
+            } else {
+                windowTitle.innerText = "Criar Conta - Orbix";
+                labelUser.innerText = "Crie seu nome de usuário:";
+                inputUser.placeholder = "Ex: Orbix_Aero";
+                inputPass.placeholder = "Crie uma senha forte";
+                btnSubmit.innerText = "Criar Conta";
+                
+                avatarContainer.classList.add('hidden');
+                fieldFullname.classList.remove('hidden');
+                fieldEmail.classList.remove('hidden');
+                forgotPassContainer.classList.add('hidden'); 
+                
+                document.getElementById('vista-fullname').required = true;
+                document.getElementById('vista-email').required = true;
+            }
+
+            welcomeScreen.classList.remove('content-fade-in');
+            welcomeScreen.classList.add('content-fade-out');
+            
+            setTimeout(() => {
+                welcomeScreen.classList.add('hidden');
+                vistaScreen.classList.remove('hidden', 'content-fade-out');
+                vistaScreen.classList.add('content-fade-in');
+                if (mode === 'login') inputUser.focus();
+                else document.getElementById('vista-fullname').focus();
+            }, 300);
+        }
+
+        window.cancelToWelcome = function() {
+            const welcomeScreen = document.getElementById('welcome-screen');
+            const vistaScreen = document.getElementById('vista-screen');
+
+            vistaScreen.classList.remove('content-fade-in');
+            vistaScreen.classList.add('content-fade-out');
+
+            setTimeout(() => {
+                vistaScreen.classList.add('hidden');
+                welcomeScreen.classList.remove('hidden', 'content-fade-out');
+                welcomeScreen.classList.add('content-fade-in');
+            }, 300);
+        }
+
+        window.triggerJumpAnimation = function(mascotId, orbId) {
+            const axolotl = document.getElementById(mascotId);
+            if (!axolotl || axolotl.classList.contains('spinning')) return;
+
+            axolotl.classList.add('spinning');
+            
+            if (orbId) {
+                const orb = document.getElementById(orbId);
+                orb.style.transform = 'scale(1.05)';
+                orb.style.boxShadow = '0 0 15px rgba(255, 255, 255, 0.45), inset 0 0 10px rgba(255, 255, 255, 0.5)';
+                setTimeout(() => { orb.style.transform = ''; orb.style.boxShadow = ''; }, 1000);
+            }
+
+            axolotl.addEventListener('animationend', function handler() {
+                axolotl.classList.remove('spinning');
+                axolotl.removeEventListener('animationend', handler);
+            });
+        }
+
+        window.togglePasswordVisibility = function() {
+            const passInput = document.getElementById('vista-pass');
+            const eyeIcon = document.getElementById('eye-icon');
+            
+            if (passInput.type === "password") {
+                passInput.type = "text";
+                eyeIcon.innerHTML = '<path d="M12 7c-2.76 0-5 2.24-5 5 0 .65.13 1.26.36 1.82l2.92-2.92c-.17-.55-.28-1.13-.28-1.9 0-1.66 1.34-3 3-3 .77 0 1.35.11 1.9.28l2.92-2.92C13.26 7.13 12.65 7 12 7zm0 10c2.76 0 5-2.24 5-5 0-.65-.13-1.26-.36-1.82l-2.92 2.92c.17.55.28 1.13.28 1.9 0 1.66-1.34 3-3 3-.77 0-1.35-.11-1.9-.28l-2.92 2.92c1.1.48 2.22.36 3.2.36zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM12 14.5c-1.38 0-2.5-1.12-2.5-2.5 0-.17.03-.34.08-.5l2.92 2.92c-.16.05-.33.08-.5.08zm4.82-3.32l-1.5-1.5 1.85-1.85C18.47 9.17 19.86 10.43 21 12c-1.73 4.39-6 7.5-11 7.5-.94 0-1.85-.11-2.73-.32l1.9-1.9c.27.07.54.12.83.12 1.66 0 3-1.34 3-3 0-.29-.05-.56-.12-.83z"/>';
+            } else {
+                passInput.type = "password";
+                eyeIcon.innerHTML = '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';
+            }
+        }
+
+        window.showAlert = function(message, isError = false, duration = 3500) {
+            const alertBox = document.getElementById('retro-alert');
+            const alertText = document.getElementById('alert-text');
+            
+            const baseClasses = "absolute bottom-6 w-11/12 max-w-sm mx-auto p-3 rounded-lg border flex items-center justify-center text-sm z-50 shadow-xl alert-fluid";
+            
+            if (isError) {
+                alertBox.className = `${baseClasses} bg-red-500/20 border-red-500/50 text-red-100`;
+            } else {
+                alertBox.className = `${baseClasses} bg-emerald-500/20 border-emerald-500/50 text-emerald-50`;
+            }
+            
+            alertText.innerText = message;
+            alertBox.classList.remove('hidden');
+            
+            setTimeout(() => { 
+                alertBox.style.opacity = '0';
+                alertBox.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    alertBox.classList.add('hidden');
+                    alertBox.style.opacity = '';
+                    alertBox.style.transform = '';
+                }, 300);
+            }, duration);
+        }
+
+        window.checkUsernameAvailability = async function() {
+            if (currentMode !== 'register') return; 
+            
+            const inputUser = document.getElementById('vista-user').value.trim().toLowerCase();
+            const feedback = document.getElementById('user-feedback');
+            
+            if (!inputUser) {
+                feedback.classList.add('hidden');
+                return;
+            }
+
+            feedback.classList.remove('hidden');
+            feedback.className = 'text-[11px] mt-1 font-semibold text-[#0b3f80] block';
+            feedback.innerText = 'Verificando...';
+
+            try {
+                const q = query(collection(db, "usuarios"), where("username", "==", inputUser));
+                const querySnapshot = await getDocs(q);
+                
+                if (!querySnapshot.empty) {
+                    feedback.className = 'text-[11px] mt-1 font-semibold text-red-600 block';
+                    feedback.innerText = 'Esse usuário já está em uso.';
+                } else {
+                    feedback.className = 'text-[11px] mt-1 font-semibold text-green-600 block';
+                    feedback.innerText = 'Usuário disponível.';
+                }
+            } catch (error) {
+                feedback.classList.add('hidden');
+            }
+        }
+
+        window.checkEmailAvailability = async function() {
+            if (currentMode !== 'register') return; 
+            
+            const inputEmail = document.getElementById('vista-email').value.trim();
+            const feedback = document.getElementById('email-feedback');
+            
+            if (!inputEmail || !inputEmail.includes('@')) {
+                feedback.classList.add('hidden');
+                return;
+            }
+
+            feedback.classList.remove('hidden');
+            feedback.className = 'text-[11px] mt-1 font-semibold text-[#0b3f80] block';
+            feedback.innerText = 'Verificando e-mail...';
+
+            try {
+                const q = query(collection(db, "usuarios"), where("email", "==", inputEmail));
+                const querySnapshot = await getDocs(q);
+                
+                if (!querySnapshot.empty) {
+                    feedback.className = 'text-[11px] mt-1 font-semibold text-red-600 block';
+                    feedback.innerText = 'Esse e-mail já está cadastrado.';
+                } else {
+                    feedback.className = 'text-[11px] mt-1 font-semibold text-green-600 block';
+                    feedback.innerText = 'E-mail disponível.';
+                }
+            } catch (error) {
+                feedback.classList.add('hidden');
+            }
+        }
+
+        window.openForgotPasswordModal = function() {
+            document.getElementById('modal-forgot-password').classList.remove('hidden');
+        }
+        
+        window.closeForgotPasswordModal = function() {
+            document.getElementById('modal-forgot-password').classList.add('hidden');
+            document.getElementById('forgot-email-input').value = '';
+        }
+
+        window.sendPasswordReset = async function() {
+            const email = document.getElementById('forgot-email-input').value.trim();
+            if (!email) {
+                window.showAlert("Por favor, digite o seu e-mail.", true);
+                return;
+            }
+
+            try {
+                await sendPasswordResetEmail(auth, email);
+                window.showAlert("Link de recuperação enviado para o seu e-mail.", false, 4000);
+                window.closeForgotPasswordModal();
+            } catch (error) {
+                if (error.code === 'auth/user-not-found') {
+                    window.showAlert("Não encontramos nenhuma conta com esse e-mail.", true);
+                } else if (error.code === 'auth/invalid-email') {
+                    window.showAlert("Formato de e-mail inválido.", true);
+                } else {
+                    window.showAlert("Erro ao enviar: " + error.message, true);
+                }
+            }
+        }
+
+        window.handleAuthSubmit = async function(event) {
+            event.preventDefault();
+            
+            const inputUser = document.getElementById('vista-user').value.trim();
+            const inputPass = document.getElementById('vista-pass').value;
+            const inputName = document.getElementById('vista-fullname').value.trim();
+            const inputEmail = document.getElementById('vista-email').value.trim();
+            
+            if (currentMode === 'login') {
+                window.triggerJumpAnimation('mascot-login-g', null);
+
+                try {
+                    const usersRef = collection(db, "usuarios");
+                    const q = query(usersRef, where("username", "==", inputUser.toLowerCase()));
+                    const querySnapshot = await getDocs(q);
+
+                    if (querySnapshot.empty) {
+                        window.showAlert("Não encontramos ninguém com esse usuário.", true);
+                        return;
+                    }
+
+                    let userEmail = "";
+                    querySnapshot.forEach((doc) => { userEmail = doc.data().email; });
+
+                    await signInWithEmailAndPassword(auth, userEmail, inputPass);
+                    
+                    window.showAlert("Login efetuado com sucesso.");
+                    setTimeout(() => { window.location.href = 'home.html'; }, 1000);
+
+                } catch (error) {
+                    if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+                        window.showAlert("Senha incorreta. Tente de novo.", true);
+                    } else {
+                        window.showAlert("Erro ao fazer login: " + error.message, true);
+                    }
+                }
+            } else {
+                try {
+                    const q = query(collection(db, "usuarios"), where("username", "==", inputUser.toLowerCase()));
+                    const querySnapshot = await getDocs(q);
+                    
+                    if (!querySnapshot.empty) {
+                        window.showAlert("Esse nome de usuário já está sendo usado.", true);
+                        return;
+                    }
+
+                    const userCredential = await createUserWithEmailAndPassword(auth, inputEmail, inputPass);
+                    const user = userCredential.user;
+
+                    await sendEmailVerification(user);
+
+                    await setDoc(doc(db, "usuarios", user.uid), {
+                        uid: user.uid,
+                        nomeCompleto: inputName,
+                        username: inputUser.toLowerCase(),
+                        email: inputEmail,
+                        bio: "Olá! Acabei de chegar à Órbita!",
+                        fotoUrl: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&h=400&fit=crop",
+                        status: "online",
+                        peixeAlimentado: 0,
+                        amigos: []
+                    });
+
+                    window.showAlert("Conta criada com sucesso.", false, 3000);
+                    
+                    setTimeout(() => { 
+                        document.getElementById('vista-pass').value = '';
+                        document.getElementById('user-feedback').classList.add('hidden');
+                        document.getElementById('email-feedback').classList.add('hidden');
+                        window.goToVistaLogin('login'); 
+                    }, 3000);
+
+                } catch (error) {
+                    if (error.code === 'auth/email-already-in-use') {
+                        window.showAlert("Já existe uma conta com este e-mail.", true);
+                    } else if (error.code === 'auth/weak-password') {
+                        window.showAlert("A senha precisa ter pelo menos 6 caracteres.", true);
+                    } else {
+                        window.showAlert("Erro: " + error.message, true);
+                    }
+                }
+            }
+        }
+
+        window.onload = window.generateBubbles;
+    </script>
+</body>
+</html>

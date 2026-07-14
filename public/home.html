@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orbix - Página Inicial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilos e Gradientes Clássicos do Windows 7 / Frutiger Aero */
+        :root {
+            --vista-blue: #0078d7;
+            --vista-green: #33b047;
+            --aero-glow: rgba(255, 255, 255, 0.4);
+        }
+
+        body {
+            background-color: #1169ad;
+            background-image: url("../assets/img/Wallpaper Nature Full HD Size.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 30px 15px;
+            min-height: 100vh;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* Animação do Axolote */
+        @keyframes axolotlSwim {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-1px, 1.5px) rotate(-1.5deg); }
+            50% { transform: translate(1px, -1px) rotate(1.5deg); }
+            75% { transform: translate(-1px, 0.5px) rotate(-0.5deg); }
+        }
+        .animated-axolotl {
+            animation: axolotlSwim 6s ease-in-out infinite;
+            transform-origin: 55px 58px !important;
+            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Moldura Principal da App */
+        .app-wrapper {
+            width: 100%; max-width: 1150px;
+            background: rgba(40, 110, 185, 0.25);
+            backdrop-filter: blur(15px) saturate(150%);
+            -webkit-backdrop-filter: blur(15px) saturate(150%);
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.45), inset 0 -1px 2px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            overflow: hidden; display: flex; flex-direction: column; position: relative; z-index: 10;
+        }
+
+        /* Barra Superior Glossy */
+        .top-gloss-bar {
+            height: 90px; width: 100%;
+            background: #0a314d;
+            background: linear-gradient(355deg, rgba(10, 49, 77, 1) 2%, rgba(19, 85, 132, 1) 38%, rgba(79, 147, 196, 1) 64%, rgba(143, 199, 255, 1) 100%) !important;
+            border-bottom: 2px solid #082954;
+            display: flex; align-items: center; justify-content: center; position: relative; z-index: 50;
+        }
+        .top-gloss-bar::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 35px;
+            background: linear-gradient(to bottom, rgba(185, 214, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%); pointer-events: none;
+        }
+
+        .main-container {
+            display: grid; grid-template-columns: 240px 1fr 220px; gap: 0; padding: 0; flex: 1; background: transparent; position: relative; z-index: 10;
+        }
+
+        .left-column { background: rgba(61, 133, 223, 0.18); border-right: 1.5px solid rgba(255, 255, 255, 0.25); padding: 20px 16px; display: flex; flex-direction: column; gap: 16px; box-shadow: inset -10px 0 20px rgba(255, 255, 255, 0.05); }
+        .middle-column { background: rgba(225, 240, 255, 0.32); padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+        .right-column { background: rgba(61, 133, 223, 0.18); border-left: 1.5px solid rgba(255, 255, 255, 0.25); padding: 20px 16px; display: flex; flex-direction: column; gap: 16px; box-shadow: inset 10px 0 20px rgba(255, 255, 255, 0.05); }
+
+        /* MOLDURA TV CRT MSN */
+        #tv {
+            position: relative; width: 140px; height: 150px; margin: 15px auto;
+            border-radius: 50% / 10%; display: flex; align-items: center; justify-content: center; transition: all 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);
+        }
+        #tv.online { background: linear-gradient(to bottom, #f8fff8 0%, #d7ffd2 12%, #7be35f 45%, #38c61f 70%, #71ff52 100%); box-shadow: inset 0 1px 3px rgba(255,255,255,.9), inset 0 -2px 6px rgba(0,0,0,.18), 0 0 8px rgba(73,255,73,.55), 0 3px 6px rgba(0,0,0,.25); }
+        #tv.dnd { background: linear-gradient(to bottom, #fffaf8 0%, #ffe4d2 12%, #e38a5f 45%, #c64b1f 70%, #ff8b52 100%); box-shadow: inset 0 1px 3px rgba(255,255,255,.9), inset 0 -2px 6px rgba(0,0,0,.18), 0 0 8px rgba(255,138,73,.55), 0 3px 6px rgba(0,0,0,.25); }
+        #tv.offline { background: linear-gradient(to bottom, #f8f8f8 0%, #e2e2e2 12%, #a0a0a0 45%, #7a7a7a 70%, #b8b8b8 100%); box-shadow: inset 0 1px 3px rgba(255,255,255,.9), inset 0 -2px 6px rgba(0,0,0,.18), 0 0 8px rgba(150,150,150,.55), 0 3px 6px rgba(0,0,0,.25); }
+        
+        #tv:before { content: ''; position: absolute; top: 10%; bottom: 10%; right: -5%; left: -5%; background: inherit; border-radius: 5% / 50%; z-index: 1; }
+        #tv::after { content: ''; position: absolute; top: 2px; left: 4px; right: 4px; height: 48%; background: linear-gradient(to bottom, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0) 100%); border-radius: 50% 50% 12px 12px / 12px 12px 4px 4px; pointer-events: none; z-index: 15; }
+
+        .msn-avatar-img-container { position: absolute; width: 110px; height: 110px; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #ffffff; border: 1px solid rgba(0, 0, 0, 0.25); box-shadow: inset 0 1px 3px rgba(0,0,0,0.15); z-index: 10; overflow: hidden; }
+        .msn-avatar-img { width: 100%; height: 100%; object-fit: cover; }
+
+        .status-text-indicator { font-weight: bold; font-size: 12px; text-shadow: 0 1px 2px rgba(0,0,0,0.6); }
+        .status-text-indicator.online { color: #15ff00; }
+        .status-text-indicator.dnd { color: #ff4d4d; } /* Texto Vermelho para "Não Perturbar" */
+        .status-text-indicator.offline { color: #b8b8b8; }
+
+        .btn-edit-profile-small { background: linear-gradient(to bottom, #ffffff 0%, #e4ecef 100%); border: 1px solid #9cb1c2; color: #0b3f80; font-size: 10px; font-weight: bold; padding: 3px 12px; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.1), inset 0 1px 0 #fff; cursor: pointer; transition: all 0.1s; text-transform: uppercase; }
+        .btn-edit-profile-small:hover { background: linear-gradient(to bottom, #ffffff 0%, #d1e2e8 100%); border-color: #6a8ca3; }
+
+        /* Menus Glass */
+        .panel-header { background: linear-gradient(to bottom, rgba(111, 174, 240, 0.8) 0%, rgba(70, 139, 224, 0.7) 48%, rgba(34, 103, 199, 0.6) 50%, rgba(21, 85, 171, 0.7) 100%); color: white; font-weight: bold; font-size: 13px; padding: 6px 12px; border-radius: 4px 4px 0 0; border: 1px solid rgba(16, 65, 140, 0.5); text-shadow: 0 1px 2px rgba(0,0,0,0.5); box-shadow: inset 0 1px 0 rgba(255,255,255,0.4); }
+        .panel-body { background: rgba(255, 255, 255, 0.76); border: 1px solid rgba(164, 195, 227, 0.6); border-top: none; border-radius: 0 0 4px 4px; padding: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); }
+        .menu-link { display: flex; align-items: center; gap: 10px; padding: 7px 8px; color: #0b3f80; font-size: 13px; font-weight: 600; text-decoration: none; border-bottom: 1px solid rgba(0,0,0,0.05); transition: all 0.1s; border-radius: 4px;}
+        .menu-link:hover { background: rgba(230, 242, 255, 0.8); color: #0050b3; }
+        .menu-icon-svg { width: 18px; height: 18px; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.15)); }
+
+        /* Banner & Posts */
+        .timeline-banner { width: 100%; height: 150px; border: 3px solid #ffffff; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.25), inset 0 0 20px rgba(255,255,255,0.4); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: #0a314d; }
+        .timeline-banner img { width: 100%; height: 100%; object-fit: cover; position: absolute; z-index: 1; }
+        .timeline-banner h2 { position: relative; z-index: 2; font-size: 32px; font-weight: 900; font-family: 'Comic Sans MS', 'Trebuchet MS', sans-serif; color: #ffffff; text-transform: uppercase; letter-spacing: 2px; text-shadow: -2px -2px 0 #005594, 2px -2px 0 #005594, -2px 2px 0 #005594, 2px 2px 0 #005594, 0px 6px 10px rgba(0,0,0,0.8); animation: textPulse 2s infinite alternate; transition: all 0.3s; }
+        @keyframes textPulse { 0% { transform: scale(0.98) rotate(-1deg); } 100% { transform: scale(1.02) rotate(1deg); } }
+
+        .post-card { background: rgba(255, 255, 255, 0.88); border: 1px solid rgba(181, 204, 223, 0.8); border-radius: 8px; padding: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.06), inset 0 1px 0 #ffffff; transition: transform 0.2s; }
+        .post-card:hover { transform: translateY(-2px); }
+        .post-header { font-size: 11px; color: #10418c; font-weight: bold; border-bottom: 1px dashed rgba(204, 204, 204, 0.8); padding-bottom: 6px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; }
+
+        .btn-like-gel { position: relative; background: linear-gradient(to bottom, #7fc3f2 0%, #3ca0f3 40%, #0070c7 50%, #00569e 100%); border: 1.5px solid #003b6f; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15); transition: all 0.15s cubic-bezier(0.2, 0.8, 0.2, 1); font-size: 11px; font-weight: bold; color: #ffffff; text-shadow: 0 1px 1px rgba(0,0,0,0.3); padding: 5px 14px; border-radius: 20px; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; overflow: hidden; }
+        .btn-like-gel::before { content: ''; position: absolute; top: 1px; left: 2px; right: 2px; height: 44%; background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.1) 100%); border-radius: 20px 20px 50% 50% / 20px 20px 8px 8px; pointer-events: none; }
+        .btn-like-gel:hover { transform: scale(1.03); background: linear-gradient(to bottom, #93d0ff 0%, #51aef5 40%, #0081e3 50%, #0069be 100%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 3px 8px rgba(0, 224, 255, 0.3); color: #ffffff; }
+        .btn-like-gel:active { transform: scale(0.97); box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4); }
+        .btn-like-gel.liked { background: linear-gradient(to bottom, #ffe885 0%, #ffcf40 40%, #ffb100 50%, #d48b00 100%); border-color: #8f5c00; color: #4f3300; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 2px rgba(0,0,0,0.15), 0 2px 6px rgba(255, 177, 0, 0.3); }
+        .btn-like-gel.liked::before { background: linear-gradient(to bottom, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.1) 100%); }
+
+        .btn-postar-gel { background: linear-gradient(to bottom, #6faef0 0%, #468be0 48%, #1c5ebd 50%, #0d3b66 100%) !important; border: 1px solid #0b2f66 !important; text-shadow: 0 1px 1px rgba(0,0,0,0.4); box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 4px rgba(0,0,0,0.15); }
+        .btn-postar-gel:hover { filter: brightness(1.08); }
+
+        .btn-logoff-gel { background: linear-gradient(to bottom, #f1948a 0%, #ec7063 40%, #c0392b 50%, #922b21 100%) !important; border: 1.5px solid #641e16 !important; color: #ffffff !important; font-weight: bold; font-size: 11px; padding: 6px 12px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 3px 6px rgba(0,0,0,0.25); cursor: pointer; transition: all 0.15s ease; width: 100%; text-shadow: 0 1px 1px rgba(0,0,0,0.5); margin-top: 24px; margin-bottom: 20px; }
+        .btn-logoff-gel:hover { filter: brightness(1.15); transform: translateY(-1px); }
+        .btn-logoff-gel:active { transform: translateY(1px); box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); }
+
+        .comment-box { background: rgba(235, 245, 255, 0.6); border-left: 3px solid #5d9ee6; border-radius: 4px; padding: 6px 10px; font-size: 12px; color: #333; position: relative; }
+        .win7-scroll-feed { max-height: 310px; overflow-y: auto; padding-right: 6px; scrollbar-width: thin; scrollbar-color: #aeaeae #f1f1f1; }
+        .win7-scroll-feed::-webkit-scrollbar { width: 17px; }
+        .win7-scroll-feed::-webkit-scrollbar-track { background: #f1f1f1; border-left: 1px solid #d2d2d2; box-shadow: inset 1px 0 3px rgba(0,0,0,0.1); }
+        .win7-scroll-feed::-webkit-scrollbar-thumb { background: linear-gradient(to right, #eaeaea 0%, #e1e1e1 30%, #cecece 70%, #b3b3b3 100%); border: 1px solid #a6a6a6; border-radius: 2px; box-shadow: inset 1px 1px 0 rgba(255,255,255,0.8); }
+        .win7-scroll-feed::-webkit-scrollbar-thumb:hover { background: linear-gradient(to right, #f2f2f2 0%, #eaeaea 30%, #dcdcdc 70%, #c6c6c6 100%); border-color: #8c8c8c; }
+
+        /* Aquário */
+        .aquarium-container { display: flex; flex-direction: column; gap: 10px; align-items: center; width: 100%; }
+        .aquarium-window { position: relative; width: 100%; height: 170px; background: linear-gradient(to bottom, #7dd3fc 0%, #0ea5e9 60%, #0369a1 100%); border: 2.5px solid #ffffff; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.3), inset 0 0 15px rgba(255,255,255,0.5); overflow: hidden; }
+        .aquarium-window::before { content: ''; position: absolute; top: 2px; left: 4px; right: 4px; height: 50%; background: linear-gradient(to bottom, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 100%); border-radius: 10px 10px 40% 40% / 10px 10px 15px 15px; pointer-events: none; z-index: 20; }
+        .seaweed { position: absolute; bottom: -5px; width: 25px; height: 70px; transform-origin: bottom center; animation: sway 4s ease-in-out infinite alternate; z-index: 2; }
+        .seaweed-1 { left: 15px; animation-delay: 0s; }
+        .seaweed-2 { right: 20px; animation-delay: -1.5s; height: 85px; }
+        @keyframes sway { 0% { transform: skewX(-5deg) scaleY(0.95); } 100% { transform: skewX(8deg) scaleY(1.05); } }
+        .fish-food-dot { position: absolute; width: 6px; height: 6px; background: radial-gradient(circle at 30% 30%, #f5b041, #ba7c18); border-radius: 50%; box-shadow: 0 1px 2px rgba(0,0,0,0.3); z-index: 5; }
+        .aero-fish { position: absolute; width: 52px; height: 52px; z-index: 10; transform-origin: center center; transition: left 1s cubic-bezier(0.25, 0.8, 0.25, 1), top 1s cubic-bezier(0.25, 0.8, 0.25, 1); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35)) contrast(110%) brightness(105%); }
+        .aero-fish-img { width: 100%; height: 100%; object-fit: contain; }
+        .fish-swim-animation { animation: swimWiggle 0.4s ease-in-out infinite alternate; }
+        @keyframes swimWiggle { 0% { transform: translateY(-1px) rotate(-2deg); } 100% { transform: translateY(1px) rotate(2deg); } }
+        @keyframes fishSpinSuccess { 0% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(180deg) scale(1.3); } 100% { transform: rotate(360deg) scale(1); } }
+        .fish-spin-victory { animation: fishSpinSuccess 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important; }
+        
+        .btn-feed-gel { background: linear-gradient(to bottom, #4ee2d4 0%, #17bfae 40%, #0c9183 50%, #05665c 100%) !important; border: 1.5px solid #03453e !important; color: #ffffff; font-weight: 700; font-size: 13px; padding: 8px 18px; border-radius: 30px; text-shadow: 0 1px 1px rgba(0,0,0,0.5); box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 3px 6px rgba(0,0,0,0.2); cursor: pointer; transition: all 0.1s ease; position: relative; overflow: hidden; }
+        .btn-feed-gel::before { content: ''; position: absolute; top: 1px; left: 3px; right: 3px; height: 45%; background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%); border-radius: 30px; pointer-events: none; }
+        .btn-feed-gel:hover { filter: brightness(1.08); transform: scale(1.02); }
+        .btn-feed-gel:active { transform: scale(0.97); box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); }
+        .feed-stat-label { font-size: 11px; color: #ffffff; font-weight: bold; text-shadow: 0 1px 2px rgba(0,0,0,0.6); text-align: center; }
+
+        /* ===================================================
+           MODAIS AERO GLASS (NOVO ESTILO GLOSSY)
+           =================================================== */
+        .aero-modal-backdrop { background: rgba(4, 25, 48, 0.55); backdrop-filter: blur(8px) saturate(120%); -webkit-backdrop-filter: blur(8px) saturate(120%); z-index: 9999; }
+        
+        .aero-input, .aero-select {
+            width: 100%; background: #ffffff; border: 1px solid #abadb3; border-radius: 2px; padding: 4px 6px; font-size: 12px; color: #000; outline: none;
+            box-shadow: inset 1px 1px 2px rgba(0,0,0,0.05); transition: border 0.2s, box-shadow 0.2s;
+        }
+        .aero-input:focus, .aero-select:focus { border-color: #3d7bad; box-shadow: inset 1px 1px 2px rgba(0,0,0,0.05), 0 0 3px rgba(61,123,173,0.5); }
+
+        .modal-glass-wrapper {
+            background: radial-gradient(circle at top right, rgba(225, 245, 255, 0.85) 0%, rgba(185, 215, 245, 0.95) 100%);
+            backdrop-filter: blur(12px) saturate(140%); -webkit-backdrop-filter: blur(12px) saturate(140%); border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 8px; box-shadow: 0 15px 35px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,1); width: 100%; max-width: 340px; overflow: hidden; display: flex; flex-direction: column; animation: bounceIn 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);
+        }
+        @keyframes bounceIn { 0% { transform: scale(0.95); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        
+        .modal-glass-header {
+            background: linear-gradient(to bottom, rgba(111, 174, 240, 0.95) 0%, rgba(70, 139, 224, 0.9) 48%, rgba(34, 103, 199, 0.9) 50%, rgba(21, 85, 171, 0.95) 100%);
+            color: white; font-weight: bold; font-size: 13px; padding: 8px 14px; border-bottom: 1px solid rgba(16, 65, 140, 0.6); text-shadow: 0 1px 2px rgba(0,0,0,0.6); box-shadow: inset 0 1px 0 rgba(255,255,255,0.4); display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .modal-glass-body { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+        .modal-glass-footer { background: rgba(255, 255, 255, 0.5); border-top: 1px solid rgba(255, 255, 255, 0.8); padding: 12px 16px; display: flex; justify-content: center; gap: 12px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.5); }
+
+        .btn-close-gel {
+            width: 34px; height: 20px; border-radius: 4px;
+            background: linear-gradient(to bottom, #fa8c8c 0%, #e03434 45%, #bd1515 50%, #8f0707 100%);
+            border: 1px solid #540202; color: #ffffff; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.7), 0 2px 4px rgba(0,0,0,0.3); transition: all 0.15s; position: relative; overflow: hidden;
+        }
+        .btn-close-gel svg { width: 10px; height: 10px; stroke-width: 2.5px; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.6)); }
+        .btn-close-gel::before { content: ''; position: absolute; top: 1px; left: 1px; right: 1px; height: 45%; background: linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(255,255,255,0.1)); border-radius: 3px 3px 6px 6px; pointer-events: none; }
+        .btn-close-gel:hover { transform: scale(1.05); filter: brightness(1.15); box-shadow: inset 0 1px 2px rgba(255,255,255,0.9), 0 0 6px rgba(255, 50, 50, 0.6); }
+        .btn-close-gel:active { transform: scale(0.95); box-shadow: inset 0 2px 4px rgba(0,0,0,0.6); }
+        
+        .btn-gel-green {
+            background: linear-gradient(to bottom, #7fdf5f 0%, #46b823 48%, #289009 50%, #1a6e03 100%); border: 1px solid #104201; color: white; text-shadow: 0 1px 1px rgba(0,0,0,0.5); box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 4px rgba(0,0,0,0.2); padding: 6px 18px; border-radius: 20px; font-weight: bold; font-size: 12px; cursor: pointer; transition: all 0.15s; opacity: 1;
+        }
+        .btn-gel-green:hover:not(:disabled) { filter: brightness(1.15); transform: scale(1.03); box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 3px 8px rgba(70, 184, 35, 0.4); }
+        .btn-gel-green:active:not(:disabled) { transform: scale(0.97); box-shadow: inset 0 2px 4px rgba(0,0,0,0.4); }
+        .btn-gel-green:disabled { filter: grayscale(100%); opacity: 0.6; cursor: not-allowed; }
+        
+        .btn-gel-gray {
+            background: linear-gradient(to bottom, #f2f6f9 0%, #d4e0e8 48%, #b9cdd9 50%, #a4bfd1 100%); border: 1px solid #718c9e; color: #0b3f80; text-shadow: 0 1px 1px rgba(255,255,255,0.8); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 2px 4px rgba(0,0,0,0.15); padding: 6px 18px; border-radius: 20px; font-weight: bold; font-size: 12px; cursor: pointer; transition: all 0.15s;
+        }
+        .btn-gel-gray:hover { filter: brightness(1.05); transform: scale(1.03); border-color: #557285; }
+        .btn-gel-gray:active { transform: scale(0.97); }
+
+        .btn-gel-red {
+            background: linear-gradient(to bottom, #f27c7c 0%, #d93636 48%, #c21717 50%, #8a0b0b 100%); border: 1px solid #4a0303; color: white; text-shadow: 0 1px 1px rgba(0,0,0,0.5); box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 4px rgba(0,0,0,0.2); padding: 6px 18px; border-radius: 20px; font-weight: bold; font-size: 12px; cursor: pointer; transition: all 0.15s;
+        }
+        .btn-gel-red:hover { filter: brightness(1.15); transform: scale(1.03); box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 3px 8px rgba(194, 23, 23, 0.4); }
+        .btn-gel-red:active { transform: scale(0.97); box-shadow: inset 0 2px 4px rgba(0,0,0,0.4); }
+
+        .settings-section-glass { background: rgba(255, 255, 255, 0.45); border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 6px; padding: 12px; box-shadow: inset 0 1px 2px rgba(255, 255, 255, 1), 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 12px; }
+        .settings-section-title { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: bold; color: #0b3f80; border-bottom: 1px solid rgba(16, 65, 140, 0.15); padding-bottom: 6px; margin-bottom: 10px; text-shadow: 0 1px 1px rgba(255,255,255,0.8); }
+
+        .avatar-glass-frame { background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.9); border-radius: 8px; padding: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.15), inset 0 1px 2px rgba(255,255,255,1); }
+
+
+        /* ===================================================
+           AERO CHAT MSN EDITION
+           =================================================== */
+        .aero-chat-window {
+            position: fixed; top: 10vh; left: calc(50vw - 325px); width: 650px; height: 500px;
+            background: rgba(215, 240, 255, 0.35); /* Base translúcida */
+            backdrop-filter: blur(18px) saturate(140%);
+            -webkit-backdrop-filter: blur(18px) saturate(140%);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,1), inset 0 0 15px rgba(255,255,255,0.5);
+            display: flex; flex-direction: column; z-index: 1000; overflow: hidden;
+            background-image: 
+                linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%, transparent);
+            background-size: 100px 100px;
+        }
+        
+        .aero-chat-titlebar {
+            height: 34px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.95) 0%, rgba(220,235,250,0.85) 45%, rgba(180,215,240,0.85) 50%, rgba(225,245,255,0.95) 100%);
+            border-bottom: 1px solid rgba(150, 190, 220, 0.9);
+            display: flex; align-items: center; justify-content: space-between; padding: 0 10px; cursor: grab;
+            box-shadow: inset 0 1px 0 #ffffff;
+        }
+
+        .aero-chat-body { flex: 1; display: flex; overflow: hidden; padding: 6px; gap: 6px; }
+        
+        .aero-chat-sidebar {
+            width: 180px; background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 6px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); display: flex; flex-direction: column; overflow: hidden;
+            min-height: 0;
+        }
+        
+        .aero-chat-main { flex: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+        
+        .aero-chat-partner-bar {
+            height: 50px; background: linear-gradient(to bottom, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 100%);
+            border: 1px solid rgba(255,255,255,0.8); border-radius: 6px;
+            display: flex; align-items: center; px-3; gap: 10px; padding: 0 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05), inset 0 1px 0 #fff;
+        }
+
+        .aero-chat-history {
+            flex: 1; background: rgba(255, 255, 255, 0.85); border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 6px; box-shadow: inset 0 2px 6px rgba(0,0,0,0.1); padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;
+        }
+        
+        .aero-chat-input-zone {
+            height: 90px; background: rgba(255, 255, 255, 0.65); border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 6px; display: flex; flex-direction: column; box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); overflow: hidden;
+        }
+
+        .chat-friend-item { padding: 6px 10px; border-bottom: 1px solid rgba(255,255,255,0.5); display: flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.15s; }
+        .chat-friend-item:hover { background: rgba(255,255,255,0.6); }
+        .chat-friend-item.active { 
+            background: linear-gradient(to bottom, rgba(240, 248, 255, 0.9), rgba(220, 240, 255, 0.9)); 
+            border: 1px solid #99ccee; border-radius: 4px; box-shadow: inset 0 1px 0 #fff; margin: 2px; border-bottom: 1px solid #99ccee;
+        }
+        
+        .aero-bubble-me {
+            background: linear-gradient(to bottom, #d8f0ff 0%, #b5e0ff 100%); border: 1px solid #7cbce6;
+            box-shadow: inset 0 1px 0 #ffffff, 0 1px 2px rgba(0,0,0,0.1); color: #0b3f80;
+        }
+        .aero-bubble-them {
+            background: linear-gradient(to bottom, #ffffff 0%, #e6f2fa 100%); border: 1px solid #b3d4e6;
+            box-shadow: inset 0 1px 0 #ffffff, 0 1px 2px rgba(0,0,0,0.1); color: #333333;
+        }
+
+        /* Estilo para Toast de Notificação Aero */
+        .aero-toast {
+            position: fixed; bottom: 24px; right: -350px; width: 320px;
+            background: radial-gradient(circle at top right, rgba(235, 248, 255, 0.9) 0%, rgba(190, 220, 250, 0.95) 100%);
+            backdrop-filter: blur(12px) saturate(140%); -webkit-backdrop-filter: blur(12px) saturate(140%);
+            border: 1.5px solid rgba(255, 255, 255, 0.85); border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,1);
+            padding: 12px 16px; z-index: 100000; transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; align-items: center; gap: 12px;
+        }
+        .aero-toast.show { right: 24px; }
+
+        /* ===================================================
+           ESTILOS DA CAIXA DE CROP
+           =================================================== */
+        .crop-container-glass {
+            width: 220px;
+            height: 220px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            background: #cbd5e1;
+            border: 4px solid #ffffff; /* Borda polaroid nativa */
+            border-radius: 12px;
+            cursor: move;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2), inset 0 2px 6px rgba(0,0,0,0.1);
+        }
+        
+        .crop-grid {
+            position: absolute;
+            inset: 0;
+            pointer-events: none; /* Deixa os cliques passarem para a imagem */
+            background-image:
+                linear-gradient(to right, rgba(255,255,255,0.4) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.4) 1px, transparent 1px);
+            background-size: 33.33% 33.33%;
+            z-index: 10;
+        }
+
+        .crop-image-target {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transform-origin: center center;
+            max-width: none;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+        
+        .aero-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: #d4e0e8;
+            outline: none;
+            border-radius: 4px;
+            border: 1px solid #9cb1c2;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .aero-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: linear-gradient(to bottom, #ffffff 0%, #e4ecef 100%);
+            border: 1px solid #6a8ca3;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- DEFINIÇÕES GLOBAIS DE SVG (Usados no logo e mascotes) -->
+    <svg width="0" height="0" style="position:absolute;">
+        <defs>
+            <radialGradient id="waterBubbleGrad" cx="35%" cy="30%" r="65%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" /><stop offset="40%" stop-color="#73d0fc" stop-opacity="0.6" /><stop offset="80%" stop-color="#006eb3" stop-opacity="0.25" /><stop offset="100%" stop-color="#003566" stop-opacity="0.8" /></radialGradient>
+            <linearGradient id="bubbleReflex" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.75"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
+            <radialGradient id="axolotlBodyGrad" cx="35%" cy="35%" r="65%"><stop offset="0%" stop-color="#e0f7fa" /><stop offset="55%" stop-color="#80deea" /><stop offset="100%" stop-color="#26c6da" /></radialGradient>
+            <linearGradient id="axolotlFinGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/><stop offset="20%" stop-color="#ff3385" stop-opacity="0.75"/><stop offset="70%" stop-color="#e6005c" stop-opacity="0.35"/><stop offset="100%" stop-color="#99003d" stop-opacity="0.15"/></linearGradient>
+            <radialGradient id="axolotlFaceGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" /><stop offset="100%" stop-color="#e0f7fa" stop-opacity="0.1" /></radialGradient>
+            <linearGradient id="aeroGlassTextGrad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/><stop offset="25%" stop-color="#ffffff" stop-opacity="0.5"/><stop offset="48%" stop-color="#ffffff" stop-opacity="0.2"/><stop offset="50%" stop-color="#ffffff" stop-opacity="0.05"/><stop offset="85%" stop-color="#e0f7fa" stop-opacity="0.3"/><stop offset="100%" stop-color="#80deea" stop-opacity="0.55"/></linearGradient>
+            <linearGradient id="glassContourGrad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.85"/><stop offset="50%" stop-color="#ffffff" stop-opacity="0.2"/><stop offset="100%" stop-color="#ffffff" stroke-width="1.2" stroke-linecap="round" stop-opacity="0.6"/></linearGradient>
+            <filter id="aeroWhiteGlow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="1" dy="2.5" stdDeviation="1.5" flood-color="#001529" flood-opacity="0.4"/><feGaussianBlur stdDeviation="4.5" result="blurGlow"/><feColorMatrix type="matrix" values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 2.2 0" in="blurGlow" result="softGlow"/><feMerge><feMergeNode in="softGlow"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+    </svg>
+
+    <!-- TELA DE CARREGAMENTO AERO STYLE -->
+    <div id="loading-overlay" class="fixed inset-0 flex items-center justify-center z-[999999]" style="background: radial-gradient(circle at 50% 120%, #1a5c8a 0%, #0c2b45 50%, #051422 100%);">
+        <div class="flex flex-col items-center">
+            <!-- Novo Logo completo -->
+            <div class="transform scale-[0.8] mb-2 drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]">
+                <svg width="310" height="120" viewBox="0 0 310 120" xmlns="http://www.w3.org/2000/svg">
+                    <g transform="translate(10, 5)">
+                        <circle cx="55" cy="55" r="45" fill="#000000" opacity="0.2" filter="blur(3px)" transform="translate(2, 4)" />
+                        <circle class="water-orb" cx="55" cy="55" r="45" fill="url(#waterBubbleGrad)" stroke="#81d4fa" stroke-width="1.5" stroke-opacity="0.8" />
+                        <g class="animated-axolotl" id="mascot-loading-g">
+                            <path d="M 33,48 C 22,44 14,48 20,54 C 24,58 31,54 33,52 Z" fill="url(#axolotlFinGrad)" />
+                            <path d="M 32,56 C 20,54 12,60 18,66 C 22,70 28,64 32,60 Z" fill="url(#axolotlFinGrad)" />
+                            <path d="M 77,48 C 88,44 96,48 90,54 C 86,58 79,54 77,52 Z" fill="url(#axolotlFinGrad)" />
+                            <path d="M 78,56 C 90,54 98,60 92,66 C 88,70 82,64 78,60 Z" fill="url(#axolotlFinGrad)" />
+                            <path d="M 55,78 C 48,88 42,92 55,95 C 68,92 62,88 55,78 Z" fill="url(#axolotlFinGrad)" />
+                            <circle cx="44" cy="76" r="3.5" fill="url(#axolotlBodyGrad)" />
+                            <circle cx="66" cy="76" r="3.5" fill="url(#axolotlBodyGrad)" />
+                            <circle cx="55" cy="58" r="23" fill="url(#axolotlBodyGrad)" />
+                            <ellipse cx="55" cy="59" rx="19" ry="17" fill="url(#axolotlFaceGrad)" />
+                            <circle cx="46.5" cy="57" r="3.5" fill="#1c2d3d" />
+                            <circle cx="45.5" cy="55.5" r="1.3" fill="#ffffff" />
+                            <circle cx="63.5" cy="57" r="3.5" fill="#1c2d3d" />
+                            <circle cx="62.5" cy="55.5" r="1.3" fill="#ffffff" />
+                            <ellipse cx="42" cy="61.5" rx="2.5" ry="1.2" fill="#ff8a80" opacity="0.65" />
+                            <ellipse cx="68" cy="61.5" rx="2.5" ry="1.2" fill="#ff8a80" opacity="0.65" />
+                            <path d="M 52,60.5 Q 53.5,62 55,60.5 Q 56.5,62 58,60.5" fill="none" stroke="#1c2d3d" stroke-width="1.2" stroke-linecap="round" />
+                        </g>
+                        <path d="M 20,40 C 30,22 80,22 90,40 C 75,32 35,32 20,40 Z" fill="url(#bubbleReflex)" />
+                    </g>
+                    <g filter="url(#aeroWhiteGlow)"><text x="112" y="88" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Trebuchet MS', sans-serif" font-weight="700" font-size="78" fill="url(#aeroGlassTextGrad)" stroke="url(#glassContourGrad)" stroke-width="1.2" letter-spacing="-1">rbix</text></g>
+                </svg>
+            </div>
+            <div class="text-[#e0f7fa] font-bold text-xl drop-shadow-md tracking-wider mt-4 animate-pulse" style="text-shadow: 0 2px 5px rgba(0,0,0,0.8);">
+                Carregando a sua Órbita...
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST DE NOTIFICAÇÃO (Agora com o Axolote SVG) -->
+    <div id="aero-toast" class="aero-toast">
+        <div class="relative w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center p-0.5">
+            <svg width="45" height="45" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" class="drop-shadow-sm -ml-2 -mt-2">
+                <g transform="translate(10, 5)">
+                    <circle cx="55" cy="55" r="45" fill="url(#waterBubbleGrad)" stroke="#81d4fa" stroke-width="1.5" stroke-opacity="0.8" />
+                    <g class="animated-axolotl">
+                        <path d="M 33,48 C 22,44 14,48 20,54 C 24,58 31,54 33,52 Z" fill="url(#axolotlFinGrad)" />
+                        <path d="M 32,56 C 20,54 12,60 18,66 C 22,70 28,64 32,60 Z" fill="url(#axolotlFinGrad)" />
+                        <path d="M 77,48 C 88,44 96,48 90,54 C 86,58 79,54 77,52 Z" fill="url(#axolotlFinGrad)" />
+                        <path d="M 78,56 C 90,54 98,60 92,66 C 88,70 82,64 78,60 Z" fill="url(#axolotlFinGrad)" />
+                        <path d="M 55,78 C 48,88 42,92 55,95 C 68,92 62,88 55,78 Z" fill="url(#axolotlFinGrad)" />
+                        <circle cx="44" cy="76" r="3.5" fill="url(#axolotlBodyGrad)" />
+                        <circle cx="66" cy="76" r="3.5" fill="url(#axolotlBodyGrad)" />
+                        <circle cx="55" cy="58" r="23" fill="url(#axolotlBodyGrad)" />
+                        <ellipse cx="55" cy="59" rx="19" ry="17" fill="url(#axolotlFaceGrad)" />
+                        <circle cx="46.5" cy="57" r="3.5" fill="#1c2d3d" />
+                        <circle cx="45.5" cy="55.5" r="1.3" fill="#ffffff" />
+                        <circle cx="63.5" cy="57" r="3.5" fill="#1c2d3d" />
+                        <circle cx="62.5" cy="55.5" r="1.3" fill="#ffffff" />
+                        <ellipse cx="42" cy="61.5" rx="2.5" ry="1.2" fill="#ff8a80" opacity="0.65" />
+                        <ellipse cx="68" cy="61.5" rx="2.5" ry="1.2" fill="#ff8a80" opacity="0.65" />
+                        <path d="M 52,60.5 Q 53.5,62 55,60.5 Q 56.5,62 58,60.5" fill="none" stroke="#1c2d3d" stroke-width="1.2" stroke-linecap="round" />
+                    </g>
+                    <path d="M 20,40 C 30,22 80,22 90,40 C 75,32 35,32 20,40 Z" fill="url(#bubbleReflex)" />
+                </g>
+            </svg>
+        </div>
+        <div class="flex flex-col">
+            <span class="text-[11px] font-bold text-[#005594] uppercase tracking-wider">Notificação Orbix</span>
+            <span id="aero-toast-text" class="text-[12px] text-[#0b3f80] font-semibold leading-snug">Carregando sistema...</span>
+        </div>
+    </div>
+
+    <div class="app-wrapper" id="app-viewport">
+        <!-- BARRA DO TOPO -->
+        <header class="top-gloss-bar">
+            <div class="transform scale-[0.6] origin-center -mt-2">
+                <svg width="310" height="120" viewBox="0 0 310 120" xmlns="http://www.w3.org/2000/svg">
+                    <g transform="translate(10, 5)">
+                        <circle cx="55" cy="55" r="45" fill="#000000" opacity="0.2" filter="blur(3px)" transform="translate(2, 4)" />
+                        <circle class="water-orb" cx="55" cy="55" r="45" fill="url(#waterBubbleGrad)" stroke="#81d4fa" stroke-width="1.5" stroke-opacity="0.8" />
+                        <g class="animated-axolotl" id="mascot-welcome-g">
+                            <path d="M 33,48 C 22,44 14,48 20,54 C 24,58 31,54 33,52 Z" fill="url(#axolotlFinGrad)" />
+                            <path d="M 32,56 C 20,54 12,60 18,66 C 22,70 28,64 32,60 Z" fill="url(#axolotlFinGrad)" />
+                            <path d="M 77,48 C 88,44 96,48 90,54 C 86,58 79,54 77,52 Z" fill="url(#axolotlFinGrad)" />
+                            <path d="M 78,56 C 90,54 98,60 92,66 C 88,70 82,64 78,60 Z" fill="url(#axolotlFinGrad)" />
+                            <path d="M 55,78 C 48,88 42,92 55,95 C 68,92 62,88 55,78 Z" fill="url(#axolotlFinGrad)" />
+                            <circle cx="44" cy="76" r="3.5" fill="url(#axolotlBodyGrad)" />
+                            <circle cx="66" cy="76" r="3.5" fill="url(#axolotlBodyGrad)" />
+                            <circle cx="55" cy="58" r="23" fill="url(#axolotlBodyGrad)" />
+                            <ellipse cx="55" cy="59" rx="19" ry="17" fill="url(#axolotlFaceGrad)" />
+                            <circle cx="46.5" cy="57" r="3.5" fill="#1c2d3d" />
+                            <circle cx="45.5" cy="55.5" r="1.3" fill="#ffffff" />
+                            <circle cx="63.5" cy="57" r="3.5" fill="#1c2d3d" />
+                            <circle cx="62.5" cy="55.5" r="1.3" fill="#ffffff" />
+                            <ellipse cx="42" cy="61.5" rx="2.5" ry="1.2" fill="#ff8a80" opacity="0.65" />
+                            <ellipse cx="68" cy="61.5" rx="2.5" ry="1.2" fill="#ff8a80" opacity="0.65" />
+                            <path d="M 52,60.5 Q 53.5,62 55,60.5 Q 56.5,62 58,60.5" fill="none" stroke="#1c2d3d" stroke-width="1.2" stroke-linecap="round" />
+                        </g>
+                        <path d="M 20,40 C 30,22 80,22 90,40 C 75,32 35,32 20,40 Z" fill="url(#bubbleReflex)" />
+                    </g>
+                    <g filter="url(#aeroWhiteGlow)"><text x="112" y="88" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Trebuchet MS', sans-serif" font-weight="700" font-size="78" fill="url(#aeroGlassTextGrad)" stroke="url(#glassContourGrad)" stroke-width="1.2" letter-spacing="-1">rbix</text></g>
+                </svg>
+            </div>
+        </header>
+
+        <div class="main-container">
+            
+            <aside class="left-column flex flex-col justify-between">
+                <div>
+                    <div class="mb-5">
+                        <div id="tv" class="online">
+                            <div class="msn-avatar-img-container">
+                                <img id="avatar-display" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&h=400&fit=crop" class="msn-avatar-img" alt="Foto de Perfil">
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col text-left w-full px-1 mt-2">
+                            <div id="user-display-name" class="text-[14px] font-bold text-white drop-shadow-md" style="text-shadow: 0 1px 2px rgba(0,0,0,0.8);">Carregando...</div>
+                            <div id="user-username-display" class="text-[11px] text-[#8ce2ff] font-bold drop-shadow-md" style="text-shadow: 0 1px 1px rgba(0,0,0,0.7); margin-top: -2px;">@...</div>
+                            
+                            <div id="avatar-status-text" class="status-text-indicator online text-[11px] mt-1">● Online</div>
+                            <div id="user-subnick" class="text-[11px] text-white/90 font-medium italic cursor-pointer hover:underline mt-1 leading-snug" style="text-shadow: 0 1px 1px rgba(0,0,0,0.6);">"..."</div>
+                            
+                            <button onclick="openEditProfileModal()" class="btn-edit-profile-small mt-3 py-1.5 px-3 self-start flex justify-center items-center gap-1.5 text-[11px] shadow-sm">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg> 
+                                Editar Perfil
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="panel-header" id="menu-orbit-title">Controles de Órbita</div>
+                        <div class="panel-body flex flex-col gap-1">
+                            
+                            <button id="btn-filter-myposts" onclick="toggleMyPostsFilter()" class="menu-link w-full text-left bg-transparent border-none">
+                                <svg class="menu-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <radialGradient id="postsIconBubbleGrad" cx="35%" cy="30%" r="65%">
+                                            <stop offset="0%" stop-color="#aae6ff"/>
+                                            <stop offset="45%" stop-color="#3cb4ff"/>
+                                            <stop offset="100%" stop-color="#0066b3"/>
+                                        </radialGradient>
+                                    </defs>
+                                    <!-- Balão de Fala Brilhante -->
+                                    <path d="M12 2C6.48 2 2 6.03 2 11C2 13.88 3.55 16.42 5.92 18.02C5.55 19.83 4 21.62 4 21.62C4 21.62 7.33 21.7 9.85 19.86C10.55 19.98 11.26 20.05 12 20.05C17.52 20.05 22 16.02 22 11C22 6.03 17.52 2 12 2Z" fill="url(#postsIconBubbleGrad)" stroke="#004d80" stroke-width="1.2" stroke-linejoin="round"/>
+                                    <!-- Reflexo (Gloss) -->
+                                    <ellipse cx="12" cy="5.5" rx="7.5" ry="2.2" fill="#ffffff" opacity="0.5" />
+                                    <!-- Linhas de Texto internas -->
+                                    <rect x="7" y="9" width="10" height="2" rx="1" fill="#ffffff" />
+                                    <rect x="7" y="13" width="6" height="2" rx="1" fill="#ffffff" />
+                                </svg>
+                                Meus Posts
+                            </button>
+                            
+                            <button onclick="openSettingsModal()" class="menu-link w-full text-left bg-transparent border-none">
+                                <svg class="menu-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <radialGradient id="settingsIconGrad" cx="35%" cy="30%" r="65%">
+                                            <stop offset="0%" stop-color="#e2e8f0"/>
+                                            <stop offset="50%" stop-color="#94a3b8"/>
+                                            <stop offset="100%" stop-color="#334155"/>
+                                        </radialGradient>
+                                    </defs>
+                                    <!-- Fundo em bolha de vidro cinza -->
+                                    <circle cx="12" cy="12" r="10" fill="url(#settingsIconGrad)" stroke="#0f172a" stroke-width="1.2" />
+                                    <ellipse cx="12" cy="6" rx="6" ry="2.5" fill="#ffffff" opacity="0.4" />
+                                    <!-- Engrenagem nova perfeitamente simétrica centralizada (Material adaptado) -->
+                                    <path transform="translate(3.6, 3.6) scale(0.7)" d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" fill="#ffffff" style="filter: drop-shadow(0 1px 1px rgba(0,0,0,0.3));"/>
+                                </svg>
+                                Configurações
+                            </button>
+
+                            <button onclick="openAddFriendsModal()" class="menu-link w-full text-left bg-transparent border-none relative">
+                                <svg class="menu-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="acceptCheckGrad" cx="35%" cy="30%" r="65%"><stop offset="0%" stop-color="#9bf262"/><stop offset="50%" stop-color="#3cb324"/><stop offset="100%" stop-color="#144d03"/></radialGradient></defs><circle cx="12" cy="12" r="10" fill="url(#acceptCheckGrad)" stroke="#113e02" stroke-width="1.2" /><ellipse cx="12" cy="6" rx="6" ry="2.5" fill="#ffffff" opacity="0.4" /><path d="M8 12l2.5 2.5 5.5-5.5" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                                Adicionar amigos
+                                <span id="request-badge" class="hidden absolute right-2 bg-red-500 text-white text-[9px] font-bold px-1.5 rounded-full shadow-sm">1</span>
+                            </button>
+                            <button onclick="openViewFriendsModal()" class="menu-link w-full text-left bg-transparent border-none">
+                                <svg class="menu-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="usersListGrad" cx="35%" cy="30%" r="65%"><stop offset="0%" stop-color="#e09bf2"/><stop offset="50%" stop-color="#a32ece"/><stop offset="100%" stop-color="#4d0566"/></radialGradient></defs><circle cx="12" cy="12" r="10" fill="url(#usersListGrad)" stroke="#39004d" stroke-width="1.2" /><ellipse cx="12" cy="6" rx="6" ry="2.5" fill="#ffffff" opacity="0.4" /><circle cx="12" cy="9.5" r="2.5" fill="#ffffff" /><path d="M6.5 16.5c0-1.8 1.5-3 5.5-3s5.5 1.2 5.5 3z" fill="#ffffff" /></svg>
+                                Ver amigos
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="handleLogoff()" class="btn-logoff-gel">Sair</button>
+            </aside>
+
+            <main class="middle-column">
+                <div class="flex flex-col">
+                    <div class="panel-header text-center text-sm" style="border-radius: 4px 4px 0 0; min-height: 12px; height: 12px; padding: 0;"></div>
+                    <div class="timeline-banner" style="border-top: none; border-radius: 0 0 8px 8px;">
+                        <img src="d8ece94bb9cb8560d454339d40f4d222.gif" onerror="this.style.display='none';" alt="Aurora Frutiger Aero" style="background: linear-gradient(135deg, #1e5799 0%,#2989d8 50%,#207cca 51%,#7db9e8 100%);">
+                        <h2 id="timeline-banner-title">★ ÓRB_TA DE POSTS ★</h2>
+                    </div>
+                </div>
+
+                <div class="post-card" style="background: rgba(225, 240, 255, 0.45); border: 1px solid rgba(148, 189, 230, 0.5);">
+                    <form onsubmit="window.postToTimeline(event)" class="flex gap-2">
+                        <input type="text" id="post-input" class="flex-1 border border-[#a4c3e3] p-2 text-sm rounded shadow-inner text-black font-semibold" placeholder="Compartilhe algo com seus amigos..." required>
+                        <button type="submit" class="btn-postar-gel text-white px-4 py-1 rounded font-bold text-sm shadow cursor-pointer">Postar</button>
+                    </form>
+                </div>
+
+                <div class="flex flex-col">
+                    <div class="panel-header" id="timeline-panel-header">Atualizações da Sua Órbita (Só Amigos)</div>
+                    <div class="panel-body win7-scroll-feed" id="posts-container" style="display:flex; flex-direction:column; gap:16px;">
+                        <p id="no-posts-msg" class="text-xs text-gray-500 text-center py-4 font-medium italic">Carregando publicações da Nuvem...</p>
+                    </div>
+                </div>
+            </main>
+
+            <aside class="right-column">
+                <div class="flex flex-col">
+                    <div class="panel-header">AeroAquarium 2006</div>
+                    <div class="panel-body p-3 flex flex-col gap-3">
+                        <div class="aquarium-container">
+                            <div class="aquarium-window" id="aquarium-window">
+                                <svg class="seaweed seaweed-1" viewBox="0 0 30 100" xmlns="http://www.w3.org/2000/svg"><path d="M15 100 Q 5 70 15 50 T 20 0" stroke="#27ae60" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M15 100 Q 25 80 10 40 T 15 10" stroke="#2ece71" stroke-width="3.2" fill="none" stroke-linecap="round"/></svg>
+                                <svg class="seaweed seaweed-2" viewBox="0 0 30 100" xmlns="http://www.w3.org/2000/svg"><path d="M15 100 Q 25 70 10 50 T 20 0" stroke="#1e8449" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M15 100 Q 5 80 15 30 T 10 5" stroke="#27ae60" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+                                <div id="my-fish" class="aero-fish fish-swim-animation" style="left: 45px; top: 60px;"><img src="https://www.transparentpng.com/thumb/fish/clipart-icon-fish-5.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2970/2970030.png';" class="aero-fish-img" alt="Peixe Aero"></div>
+                            </div>
+                            <button onclick="feedFish()" class="btn-feed-gel">Alimentar Peixe</button>
+                            <span class="feed-stat-label text-slate-800">Você alimentou o peixe <strong id="feed-count-span">0</strong> vezes!</span>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="window.openOrbixChat()" class="w-full mt-4 btn-postar-gel text-white font-bold py-2 rounded shadow cursor-pointer text-[13px] flex items-center justify-center gap-2 relative">
+                    <svg class="w-4 h-4 text-white drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                    Abrir Orbix Chat
+                    <span id="msg-badge" class="hidden absolute right-2 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">0</span>
+                </button>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Modais (Perfil, Config, Amigos) -->
+    <div id="modal-edit-profile" class="hidden fixed inset-0 flex items-center justify-center aero-modal-backdrop" style="z-index: 10005;">
+        <div class="modal-glass-wrapper">
+            <div class="modal-glass-header">
+                <span>Editar Perfil</span>
+                <button onclick="closeEditProfileModal()" class="btn-close-gel" title="Fechar"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor"><path d="M2 2l10 10M12 2L2 12"/></svg></button>
+            </div>
+            <div class="modal-glass-body">
+                <p class="text-[11px] text-[#0b3f80] mb-1 text-center font-semibold drop-shadow-sm">Deixe o perfil com a sua cara.</p>
+                <div class="flex flex-col items-center gap-4">
+                    <div class="flex flex-col items-center gap-2">
+                        <div class="avatar-glass-frame">
+                            <div class="w-[90px] h-[90px] bg-white rounded-sm overflow-hidden border border-gray-300">
+                                <img id="edit-avatar-preview" src="" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <button onclick="document.getElementById('avatar-upload').click()" class="btn-gel-gray px-4 py-1 text-[10px]">Alterar Foto...</button>
+                        <input type="file" id="avatar-upload" class="hidden" accept="image/*" onchange="initCrop(event)">
+                    </div>
+                    <div class="flex flex-col gap-3 w-full border-t border-[rgba(255,255,255,0.7)] pt-3 shadow-[0_-1px_0_rgba(0,0,0,0.05)]">
+                        <div><label class="text-[11px] font-bold text-[#0b3f80] mb-[2px] block drop-shadow-sm">Nome de Exibição:</label><input type="text" id="input-edit-name" class="aero-input"></div>
+                        <div class="relative"><label class="text-[11px] font-bold text-[#0b3f80] mb-[2px] block drop-shadow-sm">Nome de Usuário (@):</label><input type="text" id="input-edit-username" class="aero-input" placeholder="Ex: Lucas_Aero" onkeyup="checkUsernameAvailability()"><span id="username-feedback" class="text-[10px] font-bold mt-1 absolute right-0 top-0"></span></div>
+                        <div><label class="text-[11px] font-bold text-[#0b3f80] mb-[2px] block drop-shadow-sm">Bio / Status Pessoal:</label><input type="text" id="input-edit-subnick" class="aero-input"></div>
+                        <div>
+                            <label class="text-[11px] font-bold text-[#0b3f80] mb-[2px] block drop-shadow-sm">Estado de Atividade:</label>
+                            <select id="input-edit-status" class="aero-select py-1">
+                                <option value="online">Online</option><option value="dnd">Não Perturbar</option><option value="offline">Offline/Invisível</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-glass-footer">
+                <button onclick="closeEditProfileModal()" class="btn-gel-gray">Cancelar</button><button id="btn-save-profile" onclick="saveProfileChanges()" class="btn-gel-green">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-crop-avatar" class="hidden fixed inset-0 flex items-center justify-center aero-modal-backdrop" style="z-index: 10010;">
+        <div class="modal-glass-wrapper" style="width: 320px;">
+            <div class="modal-glass-header">
+                <span>Ajustar Imagem</span>
+                <button onclick="cancelCrop()" class="btn-close-gel" title="Fechar"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor"><path d="M2 2l10 10M12 2L2 12"/></svg></button>
+            </div>
+            <div class="modal-glass-body items-center p-4">
+                <p class="text-[11px] text-[#0b3f80] mb-3 font-semibold text-center drop-shadow-sm leading-tight">Arraste a foto para ajustar ou <br> use o <b>scroll do mouse</b> para dar zoom.</p>
+                <div id="crop-box" class="crop-container-glass">
+                    <img id="crop-image-source" class="crop-image-target" src="" draggable="false">
+                    <div class="crop-grid"></div>
+                </div>
+                <div class="w-full flex items-center gap-3 mt-4 px-2">
+                    <span class="text-lg font-bold text-[#0b3f80] drop-shadow-sm">-</span>
+                    <input type="range" id="crop-zoom-slider" class="aero-slider flex-1" min="1" max="3" step="0.05" value="1" oninput="handleCropZoom(this.value)">
+                    <span class="text-lg font-bold text-[#0b3f80] drop-shadow-sm">+</span>
+                </div>
+            </div>
+            <div class="modal-glass-footer"><button onclick="cancelCrop()" class="btn-gel-gray">Voltar</button><button onclick="applyCrop()" class="btn-gel-green">Confirmar</button></div>
+        </div>
+    </div>
+
+    <div id="modal-settings" class="hidden fixed inset-0 flex items-center justify-center aero-modal-backdrop" style="z-index: 10005;">
+        <div class="modal-glass-wrapper" style="width: 380px;">
+            <div class="modal-glass-header">
+                <span>Configurações da Conta</span><button onclick="closeSettingsModal()" class="btn-close-gel" title="Fechar"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor"><path d="M2 2l10 10M12 2L2 12"/></svg></button>
+            </div>
+            <div class="modal-glass-body p-3 overflow-y-auto max-h-[75vh]" style="gap: 4px;">
+                <div class="settings-section-glass">
+                    <div class="settings-section-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0b3f80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1px 1px rgba(255,255,255,1));"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Alterar Senha</div>
+                    <div class="flex flex-col gap-2 text-[11px] text-[#0b3f80]">
+                        <input type="password" id="settings-old-pass" class="aero-input" placeholder="Senha atual"><input type="password" id="settings-new-pass" class="aero-input" placeholder="Nova senha">
+                        <div class="flex items-center justify-between mt-1"><a href="#" onclick="resetPasswordAction()" class="text-[#0b3f80] hover:underline hover:text-[#0050b3] font-medium cursor-pointer">Esqueci a senha atual</a><button onclick="changePasswordAction()" class="btn-gel-green text-[10px] py-1 px-3">Atualizar Senha</button></div>
+                    </div>
+                </div>
+                <div class="settings-section-glass" style="background: rgba(255, 220, 220, 0.45); border-color: rgba(255, 150, 150, 0.6); margin-bottom: 0;">
+                    <div class="settings-section-title" style="color: #8a0b0b; border-bottom-color: rgba(138, 11, 11, 0.15);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8a0b0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 1px 1px rgba(255,255,255,1));"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>Zona de Perigo</div>
+                    <div class="flex flex-col gap-2 text-[11px] text-[#8a0b0b] font-medium">
+                        <p class="leading-tight">A exclusão apagará todos os seus dados permanentemente.</p><input type="password" id="settings-delete-pass" class="aero-input" style="border-color: #ff9999;" placeholder="Digite a senha atual para confirmar">
+                        <button onclick="deleteAccountAction()" class="btn-gel-red text-[10px] py-1 px-3 mt-1 self-start">Excluir Conta Permanentemente</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-add-friends" class="hidden fixed inset-0 flex items-center justify-center aero-modal-backdrop" style="z-index: 10000;">
+        <div class="modal-glass-wrapper" style="width: 380px;">
+            <div class="modal-glass-header"><span>Adicionar & Solicitações</span><button onclick="closeAddFriendsModal()" class="btn-close-gel" title="Fechar"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor"><path d="M2 2l10 10M12 2L2 12"/></svg></button></div>
+            <div class="modal-glass-body p-3 overflow-y-auto max-h-[75vh]" style="gap: 12px;">
+                <div class="settings-section-glass mb-0">
+                    <div class="settings-section-title">Enviar Convite de Amizade</div><p class="text-[11px] text-[#0b3f80] mb-2 font-semibold drop-shadow-sm">Digite o nome de usuário (ex: @orbix_user) para enviar um convite.</p>
+                    <div class="w-full flex flex-col gap-2 mt-1"><input type="text" id="input-add-friend-name" class="aero-input text-center py-2 text-[13px] font-medium text-[#0b3f80]" placeholder="@usuario"><button onclick="sendFriendRequest()" class="btn-gel-green text-[11px] py-1.5 w-full mt-1">Enviar Convite</button></div>
+                </div>
+                <div class="settings-section-glass mt-3"><div class="settings-section-title">Solicitações Pendentes</div><div id="pending-requests-container" class="flex flex-col gap-2 win7-scroll-feed max-h-40"><p class="text-[10px] text-gray-500 font-semibold text-center italic py-2">Nenhuma solicitação pendente.</p></div></div>
+            </div>
+            <div class="modal-glass-footer"><button onclick="closeAddFriendsModal()" class="btn-gel-gray">Fechar</button></div>
+        </div>
+    </div>
+
+    <div id="modal-view-friends" class="hidden fixed inset-0 flex items-center justify-center aero-modal-backdrop" style="z-index: 10000;">
+        <div class="modal-glass-wrapper" style="width: 380px;">
+            <div class="modal-glass-header"><span>Minha Rede de Amigos</span><button onclick="closeViewFriendsModal()" class="btn-close-gel" title="Fechar"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor"><path d="M2 2l10 10M12 2L2 12"/></svg></button></div>
+            <div class="modal-glass-body p-3">
+                <div class="flex justify-between items-center mb-2 px-1"><p class="text-[11px] text-[#0b3f80] font-bold drop-shadow-sm" id="friends-count-label">Amigos na sua órbita (0)</p></div>
+                <div class="p-1 max-h-60 overflow-y-auto win7-scroll-feed flex flex-col gap-2" id="friends-list-container"><p class="text-[10px] text-gray-500 font-semibold text-center py-2 italic">Você ainda não adicionou nenhum amigo.</p></div>
+            </div>
+            <div class="modal-glass-footer"><button onclick="closeViewFriendsModal()" class="btn-gel-gray">Fechar</button></div>
+        </div>
+    </div>
+
+    <!-- AERO CHAT WINDOW -->
+    <div id="chat-window" class="aero-chat-window" style="display:none;">
+        <div class="aero-chat-titlebar" id="chat-header">
+            <div class="flex items-center gap-2">
+                <span class="text-[12px] font-bold text-[#0b4573] tracking-wide" style="text-shadow: 0 1px 1px #fff;">Orbix Chat</span>
+            </div>
+            <div class="flex gap-1">
+                <button onclick="document.getElementById('chat-window').style.display='none'" class="btn-close-gel" title="Fechar">
+                    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor"><path d="M2 2l10 10M12 2L2 12"/></svg>
+                </button>
+            </div>
+        </div>
+        
+        <div class="aero-chat-body">
+            <div class="aero-chat-sidebar">
+                <button onclick="openViewFriendsModal()" class="w-full py-2 bg-gradient-to-b from-[#e8f5ff] to-[#d4ebff] border-b border-[#a9d4f5] hover:brightness-105 active:brightness-95 flex items-center justify-center gap-1.5 text-[10px] font-bold text-[#005594] transition cursor-pointer shadow-[inset_0_1px_0_#fff]">
+                    <span class="text-[14px] font-black text-green-600 drop-shadow-sm leading-none mt-[-2px]">+</span> 
+                    INICIAR NOVA CONVERSA
+                </button>
+                <div class="bg-gradient-to-b from-white/90 to-white/40 border-b border-white/60 p-2 text-center text-[10px] font-bold text-[#0b4573] shadow-sm tracking-wider uppercase">
+                    Meus Contatos
+                </div>
+                <div class="flex-1 overflow-y-auto win7-scroll-feed" id="chat-contacts-list">
+                    <p class="text-[10px] text-[#0b4573]/70 font-semibold text-center p-3 italic">Sem contatos.</p>
+                </div>
+            </div>
+
+            <div class="aero-chat-main">
+                <div id="chat-partner-bar" class="aero-chat-partner-bar" style="display: none;">
+                    <div class="relative flex-shrink-0 bg-white p-[2px] rounded-sm border border-gray-300 shadow-sm">
+                        <img id="chat-partner-avatar" src="" class="w-9 h-9 rounded-sm object-cover">
+                        <div id="chat-partner-status" class="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full border-[1.5px] border-white bg-gray-400"></div>
+                    </div>
+                    <div class="flex flex-col">
+                        <span id="active-chat-name" class="text-[13px] font-bold text-[#0b4573] drop-shadow-sm"></span>
+                        <span id="active-chat-subnick" class="text-[11px] text-[#0b4573]/70 italic">...</span>
+                    </div>
+                </div>
+                
+                <div class="aero-chat-history win7-scroll-feed" id="chat-messages-container">
+                    <div class="text-[11px] text-[#0b4573]/70 font-bold text-center italic mt-auto mb-auto flex flex-col items-center gap-2">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="opacity-50"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        Nenhuma conversa selecionada.<br>Escolha um contato ao lado para iniciar uma nova conversa.
+                    </div>
+                </div>
+
+                <div class="aero-chat-input-zone">
+                    <div class="flex items-center px-2 py-1 bg-gradient-to-b from-white/60 to-transparent border-b border-white/50">
+                        <span class="text-[10px] font-bold text-[#0b4573]/50">Pressione ENTER para enviar</span>
+                    </div>
+                    <form onsubmit="window.sendMessage(event)" class="flex-1 flex" id="chat-form">
+                        <textarea id="chat-message-input" disabled class="flex-1 bg-transparent border-none resize-none text-[12px] p-2 outline-none text-[#0b4573] font-medium win7-scroll-feed disabled:opacity-70 disabled:cursor-not-allowed" placeholder="Selecione um contato para iniciar uma nova conversa..."></textarea>
+                        <div class="flex flex-col justify-end p-1.5">
+                            <button type="submit" id="chat-send-btn" disabled class="btn-gel-green px-4 py-1.5 text-[11px] shadow-sm disabled:grayscale disabled:opacity-50 disabled:cursor-not-allowed">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts do Firebase e Lógica -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut, EmailAuthProvider, reauthenticateWithCredential, updatePassword, verifyBeforeUpdateEmail, sendPasswordResetEmail, deleteUser } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, addDoc, updateDoc, deleteDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCxbe1B4hgVBLstArxd3rYlunA4yvE1Guc",
+            authDomain: "orbix-netz.firebaseapp.com",
+            projectId: "orbix-netz",
+            storageBucket: "orbix-netz.firebasestorage.app",
+            messagingSenderId: "204340422679",
+            appId: "1:204340422679:web:3bbea47607f04ef68a5452",
+            measurementId: "G-HK8SWQ7S7Y"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUserUid = null;
+        let currentUserData = null;
+        let allUsersCache = {};
+        let postsUnsubscribe = null;
+        let activeChatUserId = null;
+        let unsubscribeMessages = null;
+        
+        let isLoggingOut = false;
+        let isFirstLoad = true;
+
+        window.filterMyPosts = false;
+        let allPostsList = [];
+
+        onSnapshot(collection(db, "usuarios"), (snapshot) => {
+            allUsersCache = {}; 
+            snapshot.docs.forEach(doc => { allUsersCache[doc.id] = doc.data(); });
+            if (currentUserData) { renderFriendRequests(); renderFriendsList(); }
+        });
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUserUid = user.uid;
+                onSnapshot(doc(db, "usuarios", currentUserUid), (docSnap) => {
+                    if (docSnap.exists()) {
+                        currentUserData = docSnap.data();
+                        
+                        let needsUpdate = false;
+                        let updatePayload = {};
+                        let unreadMap = currentUserData.unreadMap || {};
+
+                        if (isFirstLoad) {
+                            isFirstLoad = false;
+                            if (currentUserData.status === 'offline' && !isLoggingOut) {
+                                updatePayload.status = 'online';
+                                needsUpdate = true;
+                            }
+                        }
+
+                        const chatWindow = document.getElementById('chat-window');
+                        if (chatWindow && chatWindow.style.display === 'flex' && activeChatUserId && unreadMap[activeChatUserId]) {
+                            delete unreadMap[activeChatUserId];
+                            updatePayload.unreadMap = unreadMap;
+                            needsUpdate = true;
+                        }
+
+                        if (needsUpdate) {
+                            if (updatePayload.unreadMap !== undefined) {
+                                const totalUnread = Object.values(updatePayload.unreadMap).reduce((a, b) => a + b, 0);
+                                updatePayload.mensagensNaoLidas = totalUnread;
+                            }
+                            updateDoc(doc(db, "usuarios", currentUserUid), updatePayload);
+                        }
+
+                        updateProfileUI(); renderFriendRequests(); renderFriendsList(); setupPostsListener();
+                    } else {
+                        currentUserData = { nomeCompleto: "Novo Usuário", username: "user" + Math.floor(Math.random() * 999), bio: "Acabei de entrar na Órbita!", fotoUrl: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&h=400&fit=crop", status: "online", peixeAlimentado: 0, amigos: [], pedidosRecebidos: [], mensagensNaoLidas: 0, unreadMap: {} };
+                        setDoc(doc(db, "usuarios", currentUserUid), currentUserData);
+                    }
+                });
+                
+                // Ocultar a tela de carregamento suavemente após carregar os dados
+                setTimeout(() => {
+                    document.getElementById('loading-overlay').style.opacity = '0';
+                    document.getElementById('loading-overlay').style.transition = 'opacity 0.5s ease';
+                    setTimeout(() => document.getElementById('loading-overlay').style.display = 'none', 500);
+                    window.showAeroNotify("Bem-vindo à sua Órbita!");
+                }, 800); // 800ms pra dar tempo de admirar a animação
+
+            } else {
+                window.location.href = 'index.html';
+            }
+        });
+
+        function updateProfileUI() {
+            if(!currentUserData) return;
+            document.getElementById('user-display-name').innerText = currentUserData.nomeCompleto || "Sem Nome";
+            document.getElementById('user-username-display').innerText = '@' + (currentUserData.username || "anonimo");
+            document.getElementById('user-subnick').innerText = `"${currentUserData.bio || ""}"`;
+            document.getElementById('avatar-display').src = currentUserData.fotoUrl || "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&h=400&fit=crop";
+            document.getElementById('feed-count-span').innerText = currentUserData.peixeAlimentado || 0;
+
+            const tv = document.getElementById('tv');
+            const statusText = document.getElementById('avatar-status-text');
+            const status = currentUserData.status || 'online';
+            
+            tv.className = status;
+            if (status === 'online') { statusText.innerText = '● Online'; statusText.className = 'status-text-indicator online text-[11px] mt-1'; }
+            else if (status === 'dnd') { statusText.innerText = '● Não Perturbar'; statusText.className = 'status-text-indicator dnd text-[11px] mt-1'; }
+            else { statusText.innerText = '● Invisível/Offline'; statusText.className = 'status-text-indicator offline text-[11px] mt-1'; }
+            
+            const badge = document.getElementById('request-badge');
+            const pedidos = currentUserData.pedidosRecebidos || [];
+            if(pedidos.length > 0) { badge.innerText = pedidos.length; badge.classList.remove('hidden'); } else { badge.classList.add('hidden'); }
+
+            const msgBadge = document.getElementById('msg-badge');
+            const unreadCount = currentUserData.mensagensNaoLidas || 0;
+            if(unreadCount > 0) {
+                msgBadge.innerText = unreadCount > 5 ? '5+' : unreadCount;
+                msgBadge.classList.remove('hidden');
+            } else {
+                msgBadge.classList.add('hidden');
+            }
+        }
+
+        window.sendFriendRequest = async function() {
+            let username = document.getElementById('input-add-friend-name').value.trim().toLowerCase();
+            if(username.startsWith('@')) username = username.substring(1);
+            if (!username) return window.showAeroNotify("Por favor, digite um usuário.");
+            if (username === currentUserData.username.toLowerCase()) return window.showAeroNotify("Você não pode adicionar a si mesmo!");
+
+            let targetId = null; let targetUser = null;
+            for (const [uid, data] of Object.entries(allUsersCache)) {
+                if (data.username && data.username.toLowerCase() === username) { targetId = uid; targetUser = data; break; }
+            }
+
+            if (!targetId) return window.showAeroNotify("Usuário não encontrado.");
+            const meusAmigos = currentUserData.amigos || [];
+            if (meusAmigos.includes(targetId)) return window.showAeroNotify("Vocês já são amigos!");
+            const targetPedidos = targetUser.pedidosRecebidos || [];
+            if (targetPedidos.includes(currentUserUid)) return window.showAeroNotify("A solicitação já foi enviada!");
+
+            targetPedidos.push(currentUserUid);
+            await updateDoc(doc(db, "usuarios", targetId), { pedidosRecebidos: targetPedidos });
+            window.showAeroNotify(`Convite enviado para @${targetUser.username}!`);
+            document.getElementById('input-add-friend-name').value = '';
+        }
+
+        window.renderFriendRequests = function() {
+            const container = document.getElementById('pending-requests-container');
+            const pedidos = currentUserData.pedidosRecebidos || [];
+            const pedidosValidos = pedidos.filter(uid => allUsersCache[uid]);
+
+            if (pedidosValidos.length === 0) { 
+                container.innerHTML = '<p class="text-[10px] text-gray-500 font-semibold text-center italic py-2">Nenhuma solicitação pendente.</p>'; 
+                return; 
+            }
+
+            container.innerHTML = '';
+            pedidosValidos.forEach(uid => {
+                const user = allUsersCache[uid];
+                container.innerHTML += `<div class="flex items-center justify-between p-2 bg-white/50 border border-white/60 rounded mb-1 shadow-sm"><div class="flex items-center gap-2"><img src="${user.fotoUrl}" class="w-8 h-8 rounded border border-gray-300 object-cover"><div class="flex flex-col"><span class="text-[11px] font-bold text-[#0b3f80]">${user.nomeCompleto}</span><span class="text-[9px] text-gray-600">@${user.username}</span></div></div><div class="flex gap-1"><button onclick="acceptFriendRequest('${uid}')" class="btn-gel-green text-[9px] py-1 px-2 font-bold rounded shadow-sm">Aceitar</button><button onclick="rejectFriendRequest('${uid}')" class="btn-gel-red text-[9px] py-1 px-2 font-bold rounded shadow-sm">Recusar</button></div></div>`;
+            });
+        }
+
+        window.acceptFriendRequest = async function(targetId) {
+            let meusPedidos = currentUserData.pedidosRecebidos || [];
+            meusPedidos = meusPedidos.filter(id => id !== targetId);
+            let meusAmigos = currentUserData.amigos || [];
+            if(!meusAmigos.includes(targetId)) meusAmigos.push(targetId);
+            
+            await updateDoc(doc(db, "usuarios", currentUserUid), { pedidosRecebidos: meusPedidos, amigos: meusAmigos });
+
+            const targetUser = allUsersCache[targetId];
+            if (targetUser) {
+                let targetAmigos = targetUser.amigos || [];
+                if(!targetAmigos.includes(currentUserUid)) targetAmigos.push(currentUserUid);
+                await updateDoc(doc(db, "usuarios", targetId), { amigos: targetAmigos });
+            }
+            window.showAeroNotify("Amigo adicionado com sucesso!");
+        }
+
+        window.rejectFriendRequest = async function(targetId) {
+            let meusPedidos = currentUserData.pedidosRecebidos || [];
+            meusPedidos = meusPedidos.filter(id => id !== targetId);
+            await updateDoc(doc(db, "usuarios", currentUserUid), { pedidosRecebidos: meusPedidos });
+            window.showAeroNotify("Solicitação recusada.");
+        }
+
+        window.removeFriend = async function(friendId) {
+            if (!confirm("Tem certeza de que deseja desfazer a amizade? O histórico de mensagens com essa pessoa também será apagado.")) return;
+            try {
+                let meusAmigos = currentUserData.amigos || [];
+                meusAmigos = meusAmigos.filter(id => id !== friendId);
+                
+                let unreadMap = currentUserData.unreadMap || {};
+                if (unreadMap[friendId]) delete unreadMap[friendId];
+                const totalUnread = Object.values(unreadMap).reduce((a, b) => a + b, 0);
+
+                await updateDoc(doc(db, "usuarios", currentUserUid), { amigos: meusAmigos, unreadMap: unreadMap, mensagensNaoLidas: totalUnread });
+
+                const friendData = allUsersCache[friendId];
+                if (friendData) {
+                    let amigoAmigos = friendData.amigos || [];
+                    amigoAmigos = amigoAmigos.filter(id => id !== currentUserUid);
+                    await updateDoc(doc(db, "usuarios", friendId), { amigos: amigoAmigos });
+                }
+
+                const chatId = [currentUserUid, friendId].sort().join('_');
+                const msgsQuery = query(collection(db, "mensagens"), where("chatId", "==", chatId));
+                const msgsSnap = await getDocs(msgsQuery);
+                msgsSnap.forEach(msgDoc => deleteDoc(doc(db, "mensagens", msgDoc.id)));
+
+                if (activeChatUserId === friendId) {
+                    activeChatUserId = null;
+                    document.getElementById('chat-partner-bar').style.display = 'none';
+                    document.getElementById('chat-messages-container').innerHTML = '<div class="text-[11px] text-[#0b4573]/70 font-bold text-center italic mt-auto mb-auto flex flex-col items-center gap-2"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="opacity-50"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>Nenhuma conversa selecionada.<br>Escolha um contato ao lado para iniciar uma nova conversa.</div>';
+                    const inputElement = document.getElementById('chat-message-input');
+                    const btnElement = document.getElementById('chat-send-btn');
+                    inputElement.disabled = true; btnElement.disabled = true; inputElement.value = ''; inputElement.placeholder = "Selecione um contato para iniciar uma nova conversa...";
+                    if (unsubscribeMessages) { unsubscribeMessages(); unsubscribeMessages = null; }
+                }
+
+                window.showAeroNotify("Amizade desfeita e chat apagado.");
+            } catch (error) { window.showAeroNotify("Erro ao remover amigo."); }
+        }
+
+        window.renderFriendsList = function() {
+            const container = document.getElementById('friends-list-container');
+            const chatContacts = document.getElementById('chat-contacts-list');
+            const countLabel = document.getElementById('friends-count-label');
+
+            let meusAmigos = currentUserData.amigos || [];
+            const amigosValidos = meusAmigos.filter(id => allUsersCache[id]);
+            
+            countLabel.innerText = `Amigos na sua órbita (${amigosValidos.length})`;
+
+            if (amigosValidos.length === 0) {
+                container.innerHTML = '<p class="text-[10px] text-gray-500 font-semibold text-center py-2 italic">Você ainda não adicionou nenhum amigo.</p>';
+                chatContacts.innerHTML = '<p class="text-[10px] text-[#0b4573]/70 font-semibold text-center p-3 italic">Sem contatos.</p>';
+                return;
+            }
+
+            container.innerHTML = '';
+            chatContacts.innerHTML = '';
+
+            amigosValidos.forEach(friendId => {
+                const friend = allUsersCache[friendId];
+
+                container.innerHTML += `
+                    <div class="flex items-center justify-between p-2 bg-white/50 border border-white/60 rounded mb-1 shadow-sm">
+                        <div class="flex items-center gap-2">
+                            <div class="relative">
+                                <img src="${friend.fotoUrl}" class="w-8 h-8 rounded border border-gray-300 object-cover">
+                                <div class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border border-white ${friend.status === 'online' ? 'bg-green-500' : friend.status === 'dnd' ? 'bg-orange-500' : 'bg-gray-400'}"></div>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-[11px] font-bold text-[#0b3f80]">${friend.nomeCompleto}</span>
+                                <span class="text-[10px] text-gray-600">@${friend.username}</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-1">
+                            <button onclick="openChatWith('${friendId}'); closeViewFriendsModal();" class="btn-gel-gray text-[10px] py-1 px-2 font-bold rounded shadow-sm">Conversar</button>
+                            <button onclick="window.removeFriend('${friendId}')" class="btn-gel-red text-[10px] py-1 px-2 font-bold rounded shadow-sm" title="Desfazer amizade">Excluir</button>
+                        </div>
+                    </div>
+                `;
+
+                const unreadForFriend = (currentUserData.unreadMap && currentUserData.unreadMap[friendId]) || 0;
+                const unreadBadge = unreadForFriend > 0 ? `<span class="bg-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow-sm ml-auto">${unreadForFriend > 5 ? '5+' : unreadForFriend}</span>` : '';
+
+                chatContacts.innerHTML += `
+                    <div id="chat-contact-${friendId}" class="chat-friend-item justify-between" onclick="openChatWith('${friendId}')">
+                        <div class="flex items-center gap-2 overflow-hidden">
+                            <div class="relative flex-shrink-0 bg-white p-[1px] border border-gray-300 rounded-sm shadow-sm">
+                                <img src="${friend.fotoUrl}" class="w-7 h-7 rounded-sm object-cover">
+                                <div class="absolute -bottom-1 -right-1 w-2.5 h-2.5 rounded-full border-[1.5px] border-white ${friend.status === 'online' ? 'bg-green-500' : friend.status === 'dnd' ? 'bg-orange-500' : 'bg-gray-400'}"></div>
+                            </div>
+                            <div class="flex flex-col overflow-hidden">
+                                <span class="text-[11px] font-bold text-[#0b4573] truncate" style="text-shadow: 0 1px 0 #fff;">${friend.nomeCompleto}</span>
+                                <span class="text-[9px] text-[#0b4573]/70 truncate italic">"${friend.bio || 'Online'}"</span>
+                            </div>
+                        </div>
+                        ${unreadBadge}
+                    </div>
+                `;
+            });
+
+            if (activeChatUserId) {
+                const contactItem = document.getElementById('chat-contact-' + activeChatUserId);
+                if (contactItem) contactItem.classList.add('active');
+            }
+        }
+
+        window.openOrbixChat = function() { document.getElementById('chat-window').style.display = 'flex'; };
+
+        window.openChatWith = async function(friendId) {
+            window.openOrbixChat();
+            document.getElementById('chat-partner-bar').style.display = 'flex';
+            
+            activeChatUserId = friendId;
+            const friend = allUsersCache[friendId];
+            
+            document.getElementById('active-chat-name').innerText = friend ? friend.nomeCompleto : 'Usuário';
+            document.getElementById('active-chat-subnick').innerText = friend ? `"${friend.bio || 'Na Órbita!'}"` : '...';
+            document.getElementById('chat-partner-avatar').src = friend ? friend.fotoUrl : '';
+            
+            const statusCircle = document.getElementById('chat-partner-status');
+            statusCircle.className = `absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full border-[1.5px] border-white ${friend ? (friend.status === 'online' ? 'bg-green-500' : friend.status === 'dnd' ? 'bg-orange-500' : 'bg-gray-400') : 'bg-gray-400'}`;
+
+            document.querySelectorAll('.chat-friend-item').forEach(el => el.classList.remove('active'));
+            const contactItem = document.getElementById('chat-contact-' + friendId);
+            if (contactItem) contactItem.classList.add('active');
+
+            const inputElement = document.getElementById('chat-message-input');
+            const btnElement = document.getElementById('chat-send-btn');
+            inputElement.disabled = false; btnElement.disabled = false; inputElement.placeholder = "Digite sua mensagem aqui...";
+
+            if (currentUserData && currentUserData.unreadMap && currentUserData.unreadMap[friendId]) {
+                let unreadMap = { ...currentUserData.unreadMap };
+                delete unreadMap[friendId];
+                const totalUnread = Object.values(unreadMap).reduce((a, b) => a + b, 0);
+                await updateDoc(doc(db, "usuarios", currentUserUid), { unreadMap: unreadMap, mensagensNaoLidas: totalUnread });
+            }
+
+            loadMessages();
+            setTimeout(() => inputElement.focus(), 100);
+        };
+
+        function loadMessages() {
+            if (unsubscribeMessages) unsubscribeMessages();
+            if (!activeChatUserId) return;
+
+            const chatId = [currentUserUid, activeChatUserId].sort().join('_');
+            const q = query(collection(db, "mensagens"), where("chatId", "==", chatId));
+
+            unsubscribeMessages = onSnapshot(q, (snapshot) => {
+                let msgs = snapshot.docs.map(doc => doc.data());
+                msgs.sort((a, b) => a.timestamp - b.timestamp);
+
+                const container = document.getElementById('chat-messages-container');
+                container.innerHTML = '';
+                
+                const partner = allUsersCache[activeChatUserId];
+                const pName = partner ? partner.nomeCompleto.split(' ')[0] : 'Amigo';
+
+                if (msgs.length === 0) {
+                    container.innerHTML = '<div class="text-[11px] text-[#0b4573]/60 font-bold text-center italic mt-auto mb-auto">Início da conversa com ' + pName + '. Envie a primeira mensagem!</div>';
+                } else {
+                    msgs.forEach(m => {
+                        const isMe = m.remetente === currentUserUid;
+                        if (isMe) {
+                            container.innerHTML += `<div class="flex flex-col items-end w-full mb-1"><span class="text-[9px] text-[#0b4573]/60 font-bold mr-1 mb-0.5">Você diz:</span><div class="aero-bubble-me p-2 rounded-xl rounded-tr-sm max-w-[85%] break-words leading-snug">${m.texto.replace(/\n/g, '<br>')}</div></div>`;
+                        } else {
+                            container.innerHTML += `<div class="flex flex-col items-start w-full mb-1"><span class="text-[9px] text-[#0b4573]/60 font-bold ml-1 mb-0.5">${pName} diz:</span><div class="aero-bubble-them p-2 rounded-xl rounded-tl-sm max-w-[85%] break-words leading-snug">${m.texto.replace(/\n/g, '<br>')}</div></div>`;
+                        }
+                    });
+                    setTimeout(() => { container.scrollTop = container.scrollHeight; }, 50);
+                }
+            }, (error) => { console.error("Erro no chat:", error); });
+        }
+
+        window.sendMessage = async function(e) {
+            if(e) e.preventDefault();
+            if (!activeChatUserId) return window.showAeroNotify("Selecione um amigo primeiro.");
+            
+            const input = document.getElementById('chat-message-input');
+            const text = input.value.trim();
+            if (!text) return;
+            
+            input.value = '';
+
+            try {
+                const chatId = [currentUserUid, activeChatUserId].sort().join('_');
+                await addDoc(collection(db, "mensagens"), { chatId: chatId, remetente: currentUserUid, destinatario: activeChatUserId, texto: text, timestamp: Date.now() });
+
+                const targetUser = allUsersCache[activeChatUserId];
+                if (targetUser) {
+                    let unreadMap = targetUser.unreadMap || {};
+                    unreadMap[currentUserUid] = (unreadMap[currentUserUid] || 0) + 1;
+                    const totalUnread = Object.values(unreadMap).reduce((a, b) => a + b, 0);
+                    await updateDoc(doc(db, "usuarios", activeChatUserId), { unreadMap: unreadMap, mensagensNaoLidas: totalUnread });
+                }
+            } catch (error) { window.showAeroNotify("Falha ao enviar."); }
+        }
+
+        document.getElementById('chat-message-input').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); window.sendMessage(); }
+        });
+
+        window.toggleMyPostsFilter = function() {
+            window.filterMyPosts = !window.filterMyPosts;
+            const btn = document.getElementById('btn-filter-myposts');
+            const bannerTitle = document.getElementById('timeline-banner-title');
+            const panelHeader = document.getElementById('timeline-panel-header');
+
+            if (window.filterMyPosts) {
+                btn.style.background = 'rgba(230, 242, 255, 0.9)'; btn.style.fontWeight = 'bold';
+                if(bannerTitle) bannerTitle.innerText = "★ MEUS POSTS ★";
+                if(panelHeader) panelHeader.innerText = "Meus Posts na Órbita";
+            } else {
+                btn.style.background = 'transparent'; btn.style.fontWeight = '600';
+                if(bannerTitle) bannerTitle.innerText = "★ ÓRB_TA DE POSTS ★";
+                if(panelHeader) panelHeader.innerText = "Atualizações da Sua Órbita (Só Amigos)";
+            }
+            window.renderPosts();
+        }
+
+        function setupPostsListener() {
+            if(postsUnsubscribe) postsUnsubscribe();
+
+            postsUnsubscribe = onSnapshot(collection(db, "posts"), (snapshot) => {
+                let posts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                const meusAmigos = currentUserData.amigos || [];
+                allPostsList = posts.filter(post => post.authorId === currentUserUid || meusAmigos.includes(post.authorId));
+                allPostsList.sort((a, b) => b.timestamp - a.timestamp);
+                window.renderPosts();
+            });
+        }
+
+        window.renderPosts = function() {
+            const container = document.getElementById('posts-container');
+            let postsToRender = allPostsList;
+            if (window.filterMyPosts) postsToRender = allPostsList.filter(post => post.authorId === currentUserUid);
+
+            if (postsToRender.length === 0) {
+                container.innerHTML = '<p id="no-posts-msg" class="text-xs text-gray-500 text-center py-4 font-medium italic">' + (window.filterMyPosts ? 'Você ainda não fez nenhuma publicação.' : 'Sua órbita está vazia. Adicione amigos ou faça uma postagem!') + '</p>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            postsToRender.forEach(post => {
+                const isLiked = post.likes && post.likes.includes(currentUserUid);
+                const likesCount = post.likes ? post.likes.length : 0;
+                const date = new Date(post.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                
+                const isMyPost = post.authorId === currentUserUid;
+                const deletePostBtn = isMyPost ? `<button onclick="window.deletePost('${post.id}')" class="text-red-500 text-[10px] font-bold hover:underline shadow-sm" style="background:none; border:none; padding:0; cursor:pointer;">X Excluir Post</button>` : '';
+
+                let commentsHTML = '';
+                if(post.comments && post.comments.length > 0) {
+                    post.comments.forEach(c => {
+                        const isMyComment = c.authorId === currentUserUid;
+                        
+                        // Permite deletar se o comentário for meu OU se o post for meu
+                        const canDeleteComment = isMyComment || isMyPost;
+                        const delCommBtn = canDeleteComment ? `<button onclick="window.deleteComment('${post.id}', '${c.id}')" class="absolute right-1 top-1 text-red-500 text-[10px] font-bold hover:underline bg-white/50 px-1 rounded" style="border:none; cursor:pointer;" title="Excluir comentário">X</button>` : '';
+                        
+                        commentsHTML += `<div class="comment-box"><b>${c.authorName} (@${c.authorUsername}):</b> ${c.text} ${delCommBtn}</div>`;
+                    });
+                }
+
+                const html = `
+                <div class="post-card mb-0 group" id="${post.id}">
+                    <div class="post-header"><span class="text-xs font-bold text-[#0b5394]">★ ${post.authorName} (@${post.authorUsername}) diz:</span><div class="flex items-center gap-2"><span class="text-[10px] text-gray-500 font-normal">Às ${date}</span>${deletePostBtn}</div></div>
+                    <p class="text-[13px] text-[#333] font-semibold">${post.text}</p>
+                    <div class="mt-3 flex items-center gap-3"><button onclick="window.likePost('${post.id}')" class="btn-like-gel ${isLiked ? 'liked' : ''}"><span class="like-label">${isLiked ? 'Curtido!' : 'Curtir'}</span> (<span class="like-count">${likesCount}</span>)</button></div>
+                    <div class="mt-3 pt-3 border-t border-dashed border-gray-300 flex flex-col gap-2"><div class="comments-list flex flex-col gap-1.5">${commentsHTML}</div><form onsubmit="window.addComment(event, '${post.id}')" class="flex gap-1.5 mt-1"><input type="text" class="comment-input flex-1 text-xs p-1.5 border border-blue-200 rounded text-black bg-white" placeholder="Escreva um comentário..." required autocomplete="off"><button type="submit" class="btn-postar-gel px-3 py-0.5 text-xs rounded text-white font-bold cursor-pointer">Enviar</button></form></div>
+                </div>`;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        window.postToTimeline = async function(e) {
+            e.preventDefault();
+            const text = document.getElementById('post-input').value.trim();
+            if (!text || !currentUserUid) return;
+            document.getElementById('post-input').value = '';
+            
+            await addDoc(collection(db, "posts"), { authorId: currentUserUid, authorName: currentUserData.nomeCompleto, authorUsername: currentUserData.username, text: text, timestamp: Date.now(), likes: [], comments: [] });
+        };
+
+        window.likePost = async function(postId) {
+            if(!currentUserUid) return;
+            const postRef = doc(db, "posts", postId);
+            const postDoc = await getDoc(postRef);
+            if(postDoc.exists()) {
+                const data = postDoc.data();
+                let likes = data.likes || [];
+                if(likes.includes(currentUserUid)) likes = likes.filter(id => id !== currentUserUid);
+                else likes.push(currentUserUid);
+                await updateDoc(postRef, { likes: likes });
+            }
+        };
+
+        window.deletePost = async function(postId) {
+            if(confirm("Tem certeza de que deseja excluir esta publicação?")) {
+                await deleteDoc(doc(db, "posts", postId));
+                window.showAeroNotify("Publicação excluída com sucesso.");
+            }
+        };
+
+        window.addComment = async function(e, postId) {
+            e.preventDefault();
+            const input = e.target.querySelector('.comment-input');
+            const text = input.value.trim();
+            if(!text || !currentUserUid) return;
+            
+            const postRef = doc(db, "posts", postId);
+            const postDoc = await getDoc(postRef);
+            if(postDoc.exists()) {
+                const data = postDoc.data();
+                const comments = data.comments || [];
+                comments.push({ id: 'cmt_' + Date.now(), authorId: currentUserUid, authorName: currentUserData.nomeCompleto, authorUsername: currentUserData.username, text: text, timestamp: Date.now() });
+                await updateDoc(postRef, { comments: comments });
+            }
+            input.value = '';
+        };
+
+        window.deleteComment = async function(postId, commentId) {
+            if(confirm("Deseja apagar este comentário?")) {
+                const postRef = doc(db, "posts", postId);
+                const postDoc = await getDoc(postRef);
+                
+                if(postDoc.exists()) {
+                    const data = postDoc.data();
+                    
+                    // Validação de segurança dupla (Back/Front)
+                    const isMyPost = data.authorId === currentUserUid;
+                    const commentToDelete = (data.comments || []).find(c => c.id === commentId);
+                    const isMyComment = commentToDelete && commentToDelete.authorId === currentUserUid;
+                    
+                    if (isMyPost || isMyComment) {
+                        let comments = data.comments || [];
+                        comments = comments.filter(c => c.id !== commentId);
+                        await updateDoc(postRef, { comments: comments });
+                    } else {
+                        window.showAeroNotify("Você não tem permissão para apagar este comentário.");
+                    }
+                }
+            }
+        };
+
+        window.feedFish = async function() {
+            if(!currentUserUid) return;
+            const fish = document.getElementById('my-fish');
+            fish.classList.remove('fish-swim-animation'); fish.classList.add('fish-spin-victory');
+            setTimeout(() => { fish.classList.remove('fish-spin-victory'); fish.classList.add('fish-swim-animation'); }, 800);
+
+            const newCount = (currentUserData.peixeAlimentado || 0) + 1;
+            currentUserData.peixeAlimentado = newCount;
+            document.getElementById('feed-count-span').innerText = newCount;
+            await updateDoc(doc(db, "usuarios", currentUserUid), { peixeAlimentado: newCount });
+        };
+
+        window.checkUsernameAvailability = async function() {
+            const inputField = document.getElementById('input-edit-username');
+            let input = inputField.value.trim();
+            const feedback = document.getElementById('username-feedback');
+            const saveBtn = document.getElementById('btn-save-profile');
+            
+            if(input.startsWith('@')) { input = input.substring(1); inputField.value = input; }
+
+            if(input === currentUserData.username) { feedback.innerText = ""; saveBtn.disabled = false; return; }
+            if(input.length < 3) { feedback.innerText = "Mínimo 3 letras"; feedback.style.color = "#ff8b52"; saveBtn.disabled = true; return; }
+
+            let usernameTaken = false;
+            for (const [uid, data] of Object.entries(allUsersCache)) {
+                if(data.username && data.username.toLowerCase() === input.toLowerCase()) { usernameTaken = true; break; }
+            }
+            
+            if(usernameTaken) { feedback.innerText = "@ indisponível"; feedback.style.color = "red"; saveBtn.disabled = true; } 
+            else { feedback.innerText = "@ disponível!"; feedback.style.color = "green"; saveBtn.disabled = false; }
+        };
+
+        window.saveProfileChanges = async function() {
+            if(!currentUserUid) return;
+            const newName = document.getElementById('input-edit-name').value.trim();
+            let newUsername = document.getElementById('input-edit-username').value.trim();
+            if(newUsername.startsWith('@')) newUsername = newUsername.substring(1);
+            const newSubnick = document.getElementById('input-edit-subnick').value.trim();
+            const newAvatarSrc = document.getElementById('edit-avatar-preview').src;
+            const newStatus = document.getElementById('input-edit-status').value;
+
+            try {
+                await updateDoc(doc(db, "usuarios", currentUserUid), { nomeCompleto: newName, username: newUsername, bio: newSubnick, fotoUrl: newAvatarSrc, status: newStatus });
+                updateProfileUI(); closeEditProfileModal(); window.showAeroNotify("Perfil salvo!");
+            } catch (e) { window.showAeroNotify("Erro ao salvar perfil."); }
+        };
+
+        window.openSettingsModal = function() { document.getElementById('modal-settings').classList.remove('hidden'); }
+        window.closeSettingsModal = function() { document.getElementById('modal-settings').classList.add('hidden'); }
+
+        window.changePasswordAction = async function() {
+            const oldPass = document.getElementById('settings-old-pass').value;
+            const newPass = document.getElementById('settings-new-pass').value;
+            if(!oldPass || !newPass) { window.showAeroNotify('Preencha as duas senhas.'); return; }
+            try {
+                const credential = EmailAuthProvider.credential(auth.currentUser.email, oldPass);
+                await reauthenticateWithCredential(auth.currentUser, credential);
+                await updatePassword(auth.currentUser, newPass);
+                window.showAeroNotify('Senha alterada com sucesso!');
+                document.getElementById('settings-old-pass').value = ''; document.getElementById('settings-new-pass').value = '';
+            } catch (e) { window.showAeroNotify('Erro na alteração: valide a senha antiga.'); }
+        };
+
+        window.resetPasswordAction = function() {
+            if(auth.currentUser.email) { sendPasswordResetEmail(auth, auth.currentUser.email).then(() => { window.showAeroNotify('Link enviado.'); }).catch(() => { window.showAeroNotify('Erro ao solicitar.'); }); }
+        };
+
+        window.deleteAccountAction = async function() {
+            const currentPass = document.getElementById('settings-delete-pass').value;
+            if(!currentPass) { window.showAeroNotify('Senha atual é obrigatória.'); return; }
+            if(confirm('Tem certeza absoluta? Ação irreversível. Isso apagará seu perfil e suas publicações da Órbita.')) {
+                try {
+                    const credential = EmailAuthProvider.credential(auth.currentUser.email, currentPass);
+                    await reauthenticateWithCredential(auth.currentUser, credential);
+                    
+                    const uidToDelete = auth.currentUser.uid;
+                    document.body.style.opacity = '0.5';
+                    window.showAeroNotify('Apagando seus dados da Órbita...');
+
+                    const batchPromises = [];
+                    for (const [otherUid, data] of Object.entries(allUsersCache)) {
+                        let needsUpdate = false;
+                        let updateData = {};
+
+                        if (data.amigos && data.amigos.includes(uidToDelete)) {
+                            updateData.amigos = data.amigos.filter(id => id !== uidToDelete);
+                            needsUpdate = true;
+                        }
+                        if (data.pedidosRecebidos && data.pedidosRecebidos.includes(uidToDelete)) {
+                            updateData.pedidosRecebidos = data.pedidosRecebidos.filter(id => id !== uidToDelete);
+                            needsUpdate = true;
+                        }
+                        if (data.unreadMap && data.unreadMap[uidToDelete]) {
+                            let newMap = { ...data.unreadMap };
+                            delete newMap[uidToDelete];
+                            updateData.unreadMap = newMap;
+                            updateData.mensagensNaoLidas = Object.values(newMap).reduce((a, b) => a + b, 0);
+                            needsUpdate = true;
+                        }
+
+                        if (needsUpdate) batchPromises.push(updateDoc(doc(db, "usuarios", otherUid), updateData));
+                    }
+
+                    const postsQ = query(collection(db, "posts"), where("authorId", "==", uidToDelete));
+                    const postsSnap = await getDocs(postsQ);
+                    postsSnap.forEach(postDoc => batchPromises.push(deleteDoc(doc(db, "posts", postDoc.id))));
+
+                    await Promise.all(batchPromises);
+                    await deleteDoc(doc(db, "usuarios", uidToDelete));
+                    await deleteUser(auth.currentUser);
+
+                    window.location.href = 'index.html';
+                } catch(e) {
+                    document.body.style.opacity = '1';
+                    window.showAeroNotify('Erro ao excluir. Verifique a senha ou tente novamente.');
+                }
+            }
+        };
+
+        window.handleLogoff = async function() {
+            isLoggingOut = true; 
+            document.body.style.opacity = '0'; 
+            document.body.style.transition = 'opacity 0.6s'; 
+            
+            if (currentUserUid) {
+                try { await updateDoc(doc(db, "usuarios", currentUserUid), { status: 'offline' }); } catch (e) {}
+            }
+
+            setTimeout(() => { signOut(auth).then(() => window.location.href = 'index.html'); }, 400); 
+        };
+
+        window.addEventListener('beforeunload', () => {
+            if (currentUserUid && !isLoggingOut) updateDoc(doc(db, "usuarios", currentUserUid), { status: 'offline' }).catch(()=>{});
+        });
+    </script>
+
+    <script>
+        function showAeroNotify(message) {
+            const toast = document.getElementById('aero-toast'); document.getElementById('aero-toast-text').innerText = message;
+            toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 3500);
+        }
+        function openEditProfileModal() {
+            document.getElementById('input-edit-name').value = document.getElementById('user-display-name').innerText;
+            document.getElementById('input-edit-username').value = document.getElementById('user-username-display').innerText.replace('@', '');
+            document.getElementById('input-edit-subnick').value = document.getElementById('user-subnick').innerText.replace(/"/g, '');
+            document.getElementById('edit-avatar-preview').src = document.getElementById('avatar-display').src;
+            
+            const currentStatus = document.getElementById('avatar-status-text').className.includes('offline') ? 'offline' : document.getElementById('avatar-status-text').className.includes('dnd') ? 'dnd' : 'online';
+            document.getElementById('input-edit-status').value = currentStatus;
+
+            document.getElementById('username-feedback').innerText = ""; document.getElementById('btn-save-profile').disabled = false;
+            document.getElementById('modal-edit-profile').classList.remove('hidden');
+        }
+        function closeEditProfileModal() { document.getElementById('modal-edit-profile').classList.add('hidden'); }
+        function openAddFriendsModal() { document.getElementById('modal-add-friends').classList.remove('hidden'); }
+        function closeAddFriendsModal() { document.getElementById('modal-add-friends').classList.add('hidden'); }
+        function openViewFriendsModal() { document.getElementById('modal-view-friends').classList.remove('hidden'); }
+        function closeViewFriendsModal() { document.getElementById('modal-view-friends').classList.add('hidden'); }
+
+        let cropX = 0, cropY = 0, cropZoom = 1, baseImgW = 0, baseImgH = 0, isCropping = false, startMouseX = 0, startMouseY = 0;
+        const cropBox = document.getElementById('crop-box'), cropImg = document.getElementById('crop-image-source');
+
+        function initCrop(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    cropImg.src = e.target.result;
+                    cropImg.onload = () => {
+                        cropX = 0; cropY = 0; cropZoom = 1; document.getElementById('crop-zoom-slider').value = 1;
+                        const imgRatio = cropImg.naturalWidth / cropImg.naturalHeight;
+                        if (imgRatio > 1) { cropImg.style.height = '100%'; cropImg.style.width = 'auto'; baseImgH = 220; baseImgW = 220 * imgRatio; } 
+                        else { cropImg.style.width = '100%'; cropImg.style.height = 'auto'; baseImgW = 220; baseImgH = 220 / imgRatio; }
+                        updateCropTransform();
+                        document.getElementById('modal-edit-profile').classList.add('hidden'); document.getElementById('modal-crop-avatar').classList.remove('hidden');
+                    }
+                }; reader.readAsDataURL(file);
+            }
+        }
+        
+        function updateCropTransform() {
+            const currentW = baseImgW * cropZoom, currentH = baseImgH * cropZoom;
+            const maxX = Math.max(0, (currentW - 220) / 2), maxY = Math.max(0, (currentH - 220) / 2);
+            if (cropX > maxX) cropX = maxX; if (cropX < -maxX) cropX = -maxX;
+            if (cropY > maxY) cropY = maxY; if (cropY < -maxY) cropY = -maxY;
+            cropImg.style.transform = `translate(calc(-50% + ${cropX}px), calc(-50% + ${cropY}px)) scale(${cropZoom})`;
+        }
+        
+        function handleCropZoom(value) { cropZoom = parseFloat(value); updateCropTransform(); }
+
+        cropBox.addEventListener('mousedown', (e) => { isCropping = true; startMouseX = e.clientX - cropX; startMouseY = e.clientY - cropY; cropBox.style.cursor = 'grabbing'; });
+        window.addEventListener('mousemove', (e) => { if (!isCropping) return; e.preventDefault(); cropX = e.clientX - startMouseX; cropY = e.clientY - startMouseY; updateCropTransform(); });
+        window.addEventListener('mouseup', () => { isCropping = false; cropBox.style.cursor = 'move'; });
+
+        cropBox.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const zoomStep = 0.1;
+            if (e.deltaY < 0) cropZoom += zoomStep; else cropZoom -= zoomStep;
+            if (cropZoom < 1) cropZoom = 1; if (cropZoom > 3) cropZoom = 3;
+            document.getElementById('crop-zoom-slider').value = cropZoom; updateCropTransform();
+        }, { passive: false });
+
+        function cancelCrop() { document.getElementById('modal-crop-avatar').classList.add('hidden'); document.getElementById('modal-edit-profile').classList.remove('hidden'); }
+        
+        function applyCrop() {
+            const canvas = document.createElement('canvas'); canvas.width = 400; canvas.height = 400;
+            const ctx = canvas.getContext('2d'); ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            const imgW = cropImg.naturalWidth, imgH = cropImg.naturalHeight, boxW = cropBox.clientWidth, boxH = cropBox.clientHeight;
+            const scaleCover = Math.max(boxW / imgW, boxH / imgH), finalScale = scaleCover * cropZoom * (canvas.width / boxW);
+            const cx = (canvas.width / 2) + (cropX * (canvas.width / boxW)), cy = (canvas.height / 2) + (cropY * (canvas.height / boxH));
+            ctx.translate(cx, cy); ctx.scale(finalScale, finalScale); ctx.drawImage(cropImg, -imgW/2, -imgH/2, imgW, imgH);
+            document.getElementById('edit-avatar-preview').src = canvas.toDataURL('image/jpeg', 0.90);
+            cancelCrop();
+        }
+    </script>
+</body>
+</html>

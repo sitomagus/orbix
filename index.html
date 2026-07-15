@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Orbix - Página Inicial</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/7.css">
@@ -13,11 +13,22 @@
             --aero-glow: rgba(255, 255, 255, 0.4);
         }
 
+        html {
+            min-height: 100%;
+            background-color: #051422;
+        }
+
         body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+            min-height: 100dvh;
+            background-color: #0c2b45;
             background: radial-gradient(circle at 50% 120%, #1a5c8a 0%, #0c2b45 50%, #051422 100%);
+            background-attachment: fixed;
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
             overflow-x: hidden;
-            min-height: 100vh;
         }
 
         .aurora-bg {
@@ -48,9 +59,8 @@
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
             border-radius: 9999px;
             box-sizing: border-box;
-            width: 100%; /* Deixado 100% para responsividade */
-            max-width: 256px; /* Limite máximo para não ficar gigante em telas grandes */
-            
+            width: 100%;
+            max-width: 256px;
             background: linear-gradient(to bottom, #4db0f7 0%, #1b92e3 40%, #006eb3 50%, #005594 100%);
             border: 2px solid #004675;
             box-shadow: 
@@ -58,7 +68,6 @@
                 inset 0 -2px 5px rgba(0, 0, 0, 0.2), 
                 0 4px 12px rgba(0, 0, 0, 0.35), 
                 0 0 1px rgba(255, 255, 255, 0.2);
-                
             cursor: pointer;
             overflow: hidden;
             transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -136,20 +145,6 @@
             text-shadow: none !important;
         }
 
-        .window-body input[type="text"],
-        .window-body input[type="password"],
-        .window-body input[type="email"] {
-            width: 100%;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #000000 !important; 
-            background-color: #ffffff !important;
-        }
-
-        .window-body input::placeholder {
-            color: #777777 !important;
-        }
-
         .window-body button {
             color: #000000 !important;
             text-shadow: none !important;
@@ -157,7 +152,7 @@
 
         .win7-login-avatar {
             position: relative;
-            width: 100px; /* Ajuste leve para telas pequenas */
+            width: 100px;
             height: 100px;
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(15px);
@@ -198,22 +193,48 @@
             z-index: 5;
         }
 
+        .password-wrapper {
+            position: relative !important;
+            width: 100% !important;
+            display: block !important;
+        }
+
         .btn-eye-toggle {
-            all: unset !important;
             position: absolute !important;
-            right: 6px !important;
+            right: 2px !important; 
             top: 50% !important;
             transform: translateY(-50%) !important;
             cursor: pointer !important;
-            opacity: 0.5 !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-            transition: opacity 0.15s !important;
-            padding: 2px !important;
-            color: transparent !important;
+            width: 24px !important;
+            height: 20px !important;
+            border-radius: 2px !important;
+            border: 1px solid transparent !important;
+            background: transparent !important;
+            z-index: 10 !important;
+            transition: all 0.1s ease !important;
+            padding: 0 !important;
         }
-        .btn-eye-toggle:hover { opacity: 1 !important; }
+
+        .btn-eye-toggle:hover {
+            border: 1px solid #73A6D8 !important;
+            background: linear-gradient(to bottom, #E4F1FA 0%, #D5E8F6 48%, #C4DEF2 50%, #DEF0FC 100%) !important;
+            box-shadow: inset 0 0 2px rgba(255,255,255,0.8) !important;
+        }
+
+        .btn-eye-toggle:active {
+            border: 1px solid #5480A6 !important;
+            background: linear-gradient(to bottom, #C9DFF0 0%, #AACDE6 48%, #95C1E0 50%, #B1D4EB 100%) !important;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.3) !important;
+        }
+
+        .btn-eye-toggle svg {
+            width: 15px !important;
+            height: 15px !important;
+            filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
+        }
 
         .bubble {
             position: absolute;
@@ -318,21 +339,48 @@
         .btn-gel-gray::after, .btn-gel-gray::before, .btn-gel-green::after, .btn-gel-green::before { display: none !important; }
         .btn-gel-gray::-moz-focus-inner, .btn-gel-green::-moz-focus-inner, .btn-close-gel::-moz-focus-inner { border: 0 !important; outline: none !important; }
 
-        .aero-input { width: 100%; background: #ffffff; border: 1px solid #abadb3; border-radius: 2px; padding: 6px 8px; font-size: 12px; color: #000; outline: none; box-shadow: inset 1px 1px 2px rgba(0,0,0,0.05); transition: border 0.2s, box-shadow 0.2s; }
-        .aero-input:focus { border-color: #3d7bad; box-shadow: inset 1px 1px 2px rgba(0,0,0,0.05), 0 0 3px rgba(61,123,173,0.5); }
+        .aero-input { 
+            width: 100% !important; 
+            box-sizing: border-box !important;
+            background-color: #ffffff !important; 
+            border: 1px solid #abadb3 !important; 
+            border-top-color: #8e8f8f !important;
+            border-radius: 3px !important; 
+            padding: 5px 8px !important; 
+            font-size: 12px !important; 
+            color: #000000 !important; 
+            outline: none !important; 
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.1) !important; 
+            transition: border-color 0.15s, box-shadow 0.15s !important; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+            line-height: 1.5 !important;
+            -webkit-appearance: none !important;
+            appearance: none !important;
+        }
+        .aero-input:hover {
+            border-color: #5794bf !important;
+            border-top-color: #5794bf !important;
+        }
+        .aero-input:focus { 
+            border-color: #3d7bad !important; 
+            border-top-color: #3d7bad !important;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05), 0 0 4px rgba(61,123,173,0.6) !important; 
+        }
+        .aero-input::placeholder {
+            color: #888888 !important;
+            opacity: 1 !important;
+        }
     </style>
 </head>
-<body class="flex flex-col items-center justify-center min-h-screen text-white relative">
+<body class="flex flex-col items-center justify-center text-white relative">
 
     <div class="aurora-bg"></div>
     <div id="bubbles-container" class="fixed inset-0 pointer-events-none z-0"></div>
 
     <main class="w-full max-w-lg mx-auto flex flex-col items-center justify-center z-10 flex-1 relative h-[550px]">
         
-        <!-- Adicionei px-4 na div abaixo para telas pequenas -->
         <div id="welcome-screen" class="absolute w-full flex flex-col items-center content-fade-in gap-6 px-4">
             <div class="logo-container cursor-pointer select-none mb-2 sm:mb-4 transform hover:scale-105 transition-transform duration-300" onclick="triggerJumpAnimation('mascot-welcome-g', 'water-orb-welcome')">
-                <!-- Adicionado max-w e height auto para SVG não quebrar layout -->
                 <svg class="w-full max-w-[260px] sm:max-w-[310px] h-auto" viewBox="0 0 310 120" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <radialGradient id="waterBubbleGrad" cx="35%" cy="30%" r="65%">
@@ -409,7 +457,6 @@
                 </svg>
             </div>
 
-            <!-- Ajuste Principal: As classes text-xs sm:text-sm md:text-base controlam o tamanho responsivo -->
             <p class="text-sky-100 text-center text-xs sm:text-sm md:text-base max-w-[280px] sm:max-w-sm leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] font-medium">
                 O brilho das antigas conexões em uma nova órbita.
             </p>
@@ -461,33 +508,43 @@
                                 </svg>
                             </div>
                         </div>
-
+                        
                         <div class="field-row-stacked hidden mb-3" id="field-fullname-container">
                             <label for="vista-fullname">Nome completo:</label>
-                            <input type="text" id="vista-fullname" placeholder="Ex: Lucas Silva">
+                            <input type="text" id="vista-fullname" class="aero-input" placeholder="Ex: Lucas Silva">
                         </div>
 
                         <div class="field-row-stacked hidden mb-3" id="field-email-container">
                             <label for="vista-email">Seu e-mail:</label>
-                            <input type="email" id="vista-email" placeholder="Precisamos validar este e-mail" onblur="checkEmailAvailability()">
+                            <input type="email" id="vista-email" class="aero-input" placeholder="Precisamos validar este e-mail" onblur="checkEmailAvailability()">
                             <span id="email-feedback" class="text-[11px] mt-1 font-semibold hidden block"></span>
                         </div>
 
                         <div class="field-row-stacked mb-3">
                             <label for="vista-user" id="label-user">Nome de usuário:</label>
-                            <input type="text" id="vista-user" required placeholder="Ex: Orbix_Aero" onblur="checkUsernameAvailability()">
+                            <input type="text" id="vista-user" class="aero-input" required placeholder="Ex: Orbix_Aero" onblur="checkUsernameAvailability()">
                             <span id="user-feedback" class="text-[11px] mt-1 font-semibold hidden block"></span>
                         </div>
 
                         <div class="field-row-stacked">
                             <label for="vista-pass">Senha:</label>
-                            <div style="position:relative; width: 100%;">
-                                <input type="password" id="vista-pass" required placeholder="Senha" style="width: 100%; padding-right: 26px;">
-                                <button type="button" class="btn-eye-toggle" onclick="togglePasswordVisibility()" title="Mostrar/Ocultar">
-                                    <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#4a5568" viewBox="0 0 24 24">
-                                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                            <div class="password-wrapper">
+                                <input type="password" id="vista-pass" class="aero-input" required placeholder="Senha" style="padding-right: 32px !important;">
+                                <span id="btn-eye" class="btn-eye-toggle" onclick="togglePasswordVisibility()" title="Mostrar senha" tabindex="0">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <defs>
+                                            <radialGradient id="irisGrad" cx="40%" cy="40%" r="60%">
+                                                <stop offset="0%" stop-color="#4db0f7"/>
+                                                <stop offset="60%" stop-color="#006eb3"/>
+                                                <stop offset="100%" stop-color="#002b52"/>
+                                            </radialGradient>
+                                        </defs>
+                                        <path d="M12 6.5C6.5 6.5 2.5 12 2.5 12C2.5 12 6.5 17.5 12 17.5C17.5 17.5 21.5 12 21.5 12C21.5 12 17.5 6.5 12 6.5Z" fill="#ffffff" stroke="#5A7A96" stroke-width="1.5" stroke-linejoin="round"/>
+                                        <circle cx="12" cy="12" r="4.5" fill="url(#irisGrad)" stroke="#003566" stroke-width="0.5"/>
+                                        <circle cx="12" cy="12" r="1.8" fill="#000000"/>
+                                        <path d="M10.5 9.5 A 2 2 0 0 1 13 11" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.9"/>
                                     </svg>
-                                </button>
+                                </span>
                             </div>
                             
                             <div class="w-full flex justify-end mt-1" id="forgot-password-container">
@@ -561,6 +618,28 @@
 
         let currentMode = 'login';
 
+        const eyeOpenSvg = `
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="irisGrad" cx="40%" cy="40%" r="60%">
+                        <stop offset="0%" stop-color="#4db0f7"/>
+                        <stop offset="60%" stop-color="#006eb3"/>
+                        <stop offset="100%" stop-color="#002b52"/>
+                    </radialGradient>
+                </defs>
+                <path d="M12 6.5C6.5 6.5 2.5 12 2.5 12C2.5 12 6.5 17.5 12 17.5C17.5 17.5 21.5 12 21.5 12C21.5 12 17.5 6.5 12 6.5Z" fill="#ffffff" stroke="#5A7A96" stroke-width="1.5" stroke-linejoin="round"/>
+                <circle cx="12" cy="12" r="4.5" fill="url(#irisGrad)" stroke="#003566" stroke-width="0.5"/>
+                <circle cx="12" cy="12" r="1.8" fill="#000000"/>
+                <path d="M10.5 9.5 A 2 2 0 0 1 13 11" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.9"/>
+            </svg>`;
+
+        const eyeClosedSvg = `
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 6.5C6.5 6.5 2.5 12 2.5 12C2.5 12 6.5 17.5 12 17.5C17.5 17.5 21.5 12 21.5 12C21.5 12 17.5 6.5 12 6.5Z" fill="#e8edf2" stroke="#5A7A96" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M2.5 12C2.5 12 6.5 17.5 12 17.5C17.5 17.5 21.5 12 21.5 12" stroke="#47617A" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M12 17.5V20.5M7.5 16L6 18.5M16.5 16L18 18.5" stroke="#47617A" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>`;
+
         window.generateBubbles = function() {
             const container = document.getElementById('bubbles-container');
             for (let i = 0; i < 20; i++) { window.createBubble(container); }
@@ -585,6 +664,7 @@
             const vistaScreen = document.getElementById('vista-screen');
             const inputUser = document.getElementById('vista-user');
             const inputPass = document.getElementById('vista-pass');
+            const btnEye = document.getElementById('btn-eye');
             
             const fieldFullname = document.getElementById('field-fullname-container');
             const fieldEmail = document.getElementById('field-email-container');
@@ -599,7 +679,8 @@
             document.getElementById('email-feedback').classList.add('hidden');
 
             inputPass.type = "password";
-            document.getElementById('eye-icon').innerHTML = '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';
+            btnEye.innerHTML = eyeOpenSvg;
+            btnEye.title = "Mostrar senha";
 
             if (mode === 'login') {
                 windowTitle.innerText = "Fazer Login - Orbix";
@@ -678,14 +759,16 @@
 
         window.togglePasswordVisibility = function() {
             const passInput = document.getElementById('vista-pass');
-            const eyeIcon = document.getElementById('eye-icon');
+            const btnEye = document.getElementById('btn-eye');
             
             if (passInput.type === "password") {
                 passInput.type = "text";
-                eyeIcon.innerHTML = '<path d="M12 7c-2.76 0-5 2.24-5 5 0 .65.13 1.26.36 1.82l2.92-2.92c-.17-.55-.28-1.13-.28-1.9 0-1.66 1.34-3 3-3 .77 0 1.35.11 1.9.28l2.92-2.92C13.26 7.13 12.65 7 12 7zm0 10c2.76 0 5-2.24 5-5 0-.65-.13-1.26-.36-1.82l-2.92 2.92c.17.55.28 1.13.28 1.9 0 1.66-1.34 3-3 3-.77 0-1.35-.11-1.9-.28l-2.92 2.92c1.1.48 2.22.36 3.2.36zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM12 14.5c-1.38 0-2.5-1.12-2.5-2.5 0-.17.03-.34.08-.5l2.92 2.92c-.16.05-.33.08-.5.08zm4.82-3.32l-1.5-1.5 1.85-1.85C18.47 9.17 19.86 10.43 21 12c-1.73 4.39-6 7.5-11 7.5-.94 0-1.85-.11-2.73-.32l1.9-1.9c.27.07.54.12.83.12 1.66 0 3-1.34 3-3 0-.29-.05-.56-.12-.83z"/>';
+                btnEye.innerHTML = eyeClosedSvg;
+                btnEye.title = "Ocultar senha";
             } else {
                 passInput.type = "password";
-                eyeIcon.innerHTML = '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';
+                btnEye.innerHTML = eyeOpenSvg;
+                btnEye.title = "Mostrar senha";
             }
         }
 

@@ -14,7 +14,11 @@
   </a>
 </p>
 
----
+<p align="center">
+  <a href="https://github.com/sitomagus/orbix-relatorio#resumo-do-projeto">
+    <img src="https://img.shields.io/badge/Ver%20Documentação-4EA8DE?style=for-the-badge">
+  </a>
+</p>
 
 ## 📌 Sobre o projeto
 
